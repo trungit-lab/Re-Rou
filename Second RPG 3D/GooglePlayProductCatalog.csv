@@ -1,0 +1,4 @@
+Product ID,Published State,Purchase Type,Auto Translate,Locale; Title; Description,Auto Fill Prices,Price,Pricing Template ID
+10_premium_google,published,managed_by_android,false,en_US;10 Premium;Grant 10 premium,true,990000,
+50_premium_google,published,managed_by_android,false,en_US;50 Premium;Grant 50 premium,true,3990000,
+100_premium_google,published,managed_by_android,false,en_US;100 Premium;Grant 100 premium,true,6990000,

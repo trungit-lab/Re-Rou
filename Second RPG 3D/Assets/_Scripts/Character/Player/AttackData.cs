@@ -14,7 +14,8 @@ public class AttackData : ScriptableObject
     public LayerMask hitMask;
 
     [Tooltip("Lực đẩy tác dụng lên kẻ địch khi bị trúng đòn. Đặt là 0 nếu không có. Kẻ địch cần có Rigidbody để hoạt động.")]
-    public float knockbackForce = 0f;
+    public float knockbackForce = 10f; // Lực đẩy lùi
+    public float knockupForce = 5f;
 
 
     [Header("Movement (Dành riêng cho kỹ năng Dash)")]

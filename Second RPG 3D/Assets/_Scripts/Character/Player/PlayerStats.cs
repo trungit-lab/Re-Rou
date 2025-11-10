@@ -37,20 +37,44 @@ public class PlayerStats : MonoBehaviour
 
     public void GetHit(float amount)
     {
-        if (isDead) return;
+        
+        if (isDead)
+        {
+            return;
+        }
+       
 
+        // KIỂM TRA 2: Máu trước và sau khi trừ
+        float hpBefore = currentHp;
         currentHp -= amount;
-        if (healthBar != null) healthBar.value = currentHp;
+        float hpAfter = currentHp;
+        //Debug.Log($"[KIỂM TRA 2] Máu thay đổi: {hpBefore} -> {hpAfter}");
 
+        // KIỂM TRA 3: Thanh máu (healthBar) có được gán không?
+        if (healthBar != null)
+        {
+            healthBar.value = currentHp;
+        }
+        else
+        {
+            Debug.LogWarning("[KIỂM TRA 3] Lỗi! HealthBar chưa được gán trong Inspector.");
+        }
+
+        // KIỂM TRA 4: Logic chết và animation
         if (currentHp > 0)
         {
+           
             amin.SetTrigger("getHit");
         }
         else
         {
+            Debug.LogWarning("[KIỂM TRA 4] Máu đã hết. Gọi hàm Die().");
             Die();
         }
+
     }
+
+
 
     private void Die()
     {

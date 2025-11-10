@@ -90,19 +90,26 @@ public class ChaseState : IState
 
     public void Execute()
     {
-        // Nếu mục tiêu đã bị tiêu diệt hoặc ngoài tầm quét, quay về nghỉ
-        if (context.currentTarget == null)
+        // Ưu tiên 1: Tấn công kẻ địch nếu thấy
+        if (context.currentTarget != null)
+        {
+            context.GetComponent<NavMeshAgent>().SetDestination(context.currentTarget.position);
+
+            float distance = Vector3.Distance(context.transform.position, context.currentTarget.position);
+            if (distance <= context.profile.attackRange)
+            {
+                (context as SlimeAI).ChangeState((context as SlimeAI).AttackState);
+            }
+        }
+        // Ưu tiên 2: Nếu không có kẻ địch, tiếp tục đi đến mục tiêu chính
+        else if (context.mainObjectiveTarget != null)
+        {
+            context.GetComponent<NavMeshAgent>().SetDestination(context.mainObjectiveTarget.position);
+        }
+        // Ưu tiên 3: Nếu không có cả hai, đứng yên
+        else
         {
             (context as SlimeAI).ChangeState((context as SlimeAI).IdleState);
-            return;
-        }
-
-        context.GetComponent<NavMeshAgent>().SetDestination(context.currentTarget.position);
-        float distance = Vector3.Distance(context.transform.position, context.currentTarget.position);
-
-        if (distance <= context.profile.attackRange)
-        {
-            (context as SlimeAI).ChangeState((context as SlimeAI).AttackState);
         }
     }
     public void Exit() { }
@@ -174,6 +181,7 @@ public class SiegeState : IState
 
     public void Execute()
     {
+        // Ưu tiên 1: Tấn công kẻ địch nếu có trong tầm quét
         if (context.currentTarget != null)
         {
             context.GetComponent<NavMeshAgent>().SetDestination(context.currentTarget.position);
@@ -184,10 +192,16 @@ public class SiegeState : IState
                 (context as SlimeAI).ChangeState((context as SlimeAI).AttackState);
             }
         }
+        // Ưu tiên 2: Nếu không có kẻ địch, TIẾP TỤC di chuyển đến mục tiêu chính
+        else if (context.mainObjectiveTarget != null)
+        {
+            
+            context.GetComponent<NavMeshAgent>().SetDestination(context.mainObjectiveTarget.position);
+        }
+        // Ưu tiên 3: Nếu không có cả hai, lúc đó mới đứng yên
         else
         {
-            // Nếu không có mục tiêu nào trong tầm quét, AI công thành có thể đứng chờ hoặc đi loanh quanh
-            // Quay về Idle là một lựa chọn an toàn
+            Debug.Log("Slime không có mục tiêu, chuyển sang trạng thái Idle.");
             (context as SlimeAI).ChangeState((context as SlimeAI).IdleState);
         }
     }
@@ -204,5 +218,3 @@ public class DieState : IState
     public void Exit() { }
 }
 
-// AlertState có thể không còn cần thiết nữa, hoặc có thể được tái sử dụng
-// như một trạng thái "gầm gừ" trước khi tấn công. Tạm thời chúng ta có thể không dùng đến nó.

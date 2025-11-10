@@ -9,7 +9,7 @@ public class RainManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        _gm = FindObjectOfType(typeof(GameManager)) as GameManager;
+        //_gm = FindObjectOfType(typeof(GameManager)) as GameManager;
     }
 
     // Update is called once per frame

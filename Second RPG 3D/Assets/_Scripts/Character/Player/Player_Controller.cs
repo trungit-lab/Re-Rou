@@ -51,7 +51,7 @@ public class Player_Controller : MonoBehaviour
 
     void Start()
     {
-        _gm = FindObjectOfType<GameManager>();
+        _gm = Object.FindFirstObjectByType<GameManager>();
         ccl = GetComponent<CharacterController>();
         amin = GetComponent<Animator>();
         playerStats = GetComponent<PlayerStats>(); // Lấy component PlayerStats để giao tiếp

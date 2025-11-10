@@ -14,7 +14,7 @@ public class AIProfile : ScriptableObject
     [Tooltip("AI này thuộc phe nào?")]
     public Faction myFaction; // THÊM MỚI
     [Header("Behavior")]
-    public AIBehaviorType behaviorType = AIBehaviorType.PatrolAndChase;
+    public AIBehaviorType behaviorType = AIBehaviorType.Siege;
 
     [Header("Health & Damage")]
     public float maxHp = 10f;
@@ -32,4 +32,8 @@ public class AIProfile : ScriptableObject
     public float idleWaitTime = 3f;
     public float alertWaitTime = 2f;
     public float dieAnimationTime = 1.7f;
+
+    [Tooltip("Tag của Object Pool mà AI này thuộc về. PHẢI TRÙNG VỚI TAG TRONG OBJECT POOLER.")]
+    public string poolTag;
+
 }

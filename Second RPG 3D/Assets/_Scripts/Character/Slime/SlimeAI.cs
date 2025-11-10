@@ -46,11 +46,14 @@ public class SlimeAI : BaseAIController
             case AIBehaviorType.PatrolAndChase:
                 // Nếu là quái đi tuần bình thường, bắt đầu bằng trạng thái nghỉ
                 ChangeState(IdleState);
+              
                 break;
 
             case AIBehaviorType.Siege:
                 // Nếu là quái công thành, bắt đầu ngay bằng trạng thái công thành
+
                 ChangeState(SiegeState);
+              
                 break;
 
             default:

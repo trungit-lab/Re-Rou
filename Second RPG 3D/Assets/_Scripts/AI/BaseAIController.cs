@@ -69,6 +69,7 @@ public abstract class BaseAIController : MonoBehaviour
         InitializeStates();
     }
 
+    [System.Obsolete]
     protected virtual void Start()
     {
         gameManager = FindObjectOfType<GameManager>();
@@ -80,6 +81,8 @@ public abstract class BaseAIController : MonoBehaviour
             Debug.LogError(gameObject.name + ": AIProfile is not assigned in the Inspector!");
             return;
         }
+
+        agent.stoppingDistance = profile.attackRange;
 
         currentHp = profile.maxHp;
         if (healthBarObject != null)
@@ -189,10 +192,12 @@ public abstract class BaseAIController : MonoBehaviour
 
     public virtual void GetHit(float damage)
     {
+        //Debug.Log($"<color=green>THÀNH CÔNG! '{this.gameObject.name}' đã nhận được thông điệp 'GetHit' với damage = {damage}.</color>");
         if (IsDead()) return;
         currentHp -= damage;
         if (healthBarSlider != null) healthBarSlider.value = currentHp;
         animator.SetTrigger("GetHit");
+        //Debug.Log($"{gameObject.name} bị đánh trúng và mất {damage} HP.");
         if (currentHp <= 0)
         {
             currentHp = 0;
@@ -205,25 +210,109 @@ public abstract class BaseAIController : MonoBehaviour
     }
 
     // CẬP NHẬT: Hàm này giờ sẽ tấn công currentTarget thay vì chỉ player
+
     public void AttackHit()
     {
-        if (IsDead() || currentTarget == null) return;
+       
 
-        float distanceToTarget = Vector3.Distance(transform.position, currentTarget.position);
-        if (distanceToTarget <= profile.attackRange + 0.5f) // Thêm khoảng đệm nhỏ
+        if (currentTarget == null)
         {
-            // Cần một hệ thống nhận sát thương chung cho các mục tiêu
-            // Ví dụ: IDamageable damageable = currentTarget.GetComponent<IDamageable>();
-            // if(damageable != null) { damageable.TakeDamage(profile.attackDamage); }
+         
+            return;
+        }
 
-            // Tạm thời, ta có thể thử lấy các loại component khác nhau
-            PlayerStats playerStats = currentTarget.GetComponent<PlayerStats>();
+
+        // DỮ KIỆN 2: AI có đang ở trong tầm tấn công không?
+        float distanceToTarget = Vector3.Distance(transform.position, currentTarget.position);
+        float requiredDistance = profile.attackRange + 0.5f;
+    
+
+        if (distanceToTarget <= requiredDistance)
+        {
+       
+
+            PlayerStats playerStats = currentTarget.GetComponentInParent<PlayerStats>();
+
             if (playerStats != null)
             {
-                playerStats.GetHit(profile.attackDamage);
+                
+                float damageToDeal = profile.attackDamage;
+             
+
+                if (damageToDeal > 0)
+                {
+              
+                    playerStats.GetHit(damageToDeal);
+                }
+                else
+                {
+                    Debug.LogWarning("[CẢNH BÁO] Sát thương bằng 0, sẽ không gây mất máu.");
+                }
             }
-            // Thêm logic gây sát thương cho các loại mục tiêu khác ở đây
+            else
+            {
+                Debug.LogError($"[THẤT BẠI] Không thể tìm thấy component 'PlayerStats' trên '{currentTarget.name}' hoặc bất kỳ đối tượng cha nào của nó!");
+            }
         }
+        else
+        {
+            Debug.LogWarning("[THẤT BẠI] Mục tiêu ở ngoài tầm tấn công vào thời điểm Animation Event được gọi.");
+        }
+
+
+    }
+
+    /// <summary>
+    /// Áp dụng một AI Profile mới cho AI này và reset lại các chỉ số.
+    /// Rất quan trọng cho hệ thống Spawner và Object Pooling.
+    /// </summary>
+    public void ApplyProfile(AIProfile newProfile)
+    {
+        if (newProfile == null)
+        {
+            Debug.LogError("Cố gắng áp dụng một Profile rỗng (null) cho " + gameObject.name);
+            return;
+        }
+
+        // Gán profile mới
+        profile = newProfile;
+
+        // Reset lại các chỉ số dựa trên profile mới
+        currentHp = profile.maxHp;
+        if (agent != null)
+        {
+            if (!agent.enabled) agent.enabled = true;
+            agent.stoppingDistance = profile.attackRange;
+        }
+
+        if (mainCollider != null)
+        {
+            if (!mainCollider.enabled) mainCollider.enabled = true;
+        }
+
+        // --- PHẦN SỬA LỖI QUAN TRỌNG ---
+        if (healthBarObject != null)
+        {
+            // 1. Luôn kích hoạt lại thanh máu
+            healthBarObject.SetActive(true);
+
+            // 2. Gán lại tham chiếu đến Slider mỗi lần để đảm bảo nó không bị null
+            healthBarSlider = healthBarObject.GetComponent<Slider>();
+
+            // 3. Kiểm tra lại một lần nữa trước khi sử dụng để tuyệt đối an toàn
+            if (healthBarSlider != null)
+            {
+                healthBarSlider.maxValue = profile.maxHp;
+                healthBarSlider.value = currentHp;
+            }
+            else
+            {
+                Debug.LogError("Đối tượng 'healthBarObject' không có component Slider!", this.gameObject);
+            }
+        }
+
+        // Reset lại trạng thái ban đầu để AI bắt đầu hành động
+        SetInitialState();
     }
 
     protected virtual void ApplySeparation()
@@ -249,6 +338,7 @@ public abstract class BaseAIController : MonoBehaviour
         }
     }
 
+
     #region Abstract & Virtual Methods
     protected abstract void InitializeStates();
     protected abstract void SetInitialState();
@@ -261,18 +351,35 @@ public abstract class BaseAIController : MonoBehaviour
         }
 
         StopAllCoroutines();
-        agent.isStopped = true;
+
+        // Tắt các component thay vì hủy
         agent.enabled = false;
         mainCollider.enabled = false;
         if (healthBarObject != null) healthBarObject.SetActive(false);
+
+        // Bắt đầu chuỗi animation chết, sau đó trả về Pool
         StartCoroutine(DieSequence());
     }
 
     protected virtual IEnumerator DieSequence()
     {
+        
         animator.SetTrigger("Die");
+
+        // Chờ animation chết chạy xong
         yield return new WaitForSeconds(profile.dieAnimationTime);
-        Destroy(gameObject);
+
+        // THAY ĐỔI QUAN TRỌNG: Tự trả mình về kho
+        if (ObjectPooler.Instance != null && !string.IsNullOrEmpty(profile.poolTag))
+        {
+            ObjectPooler.Instance.ReturnToPool(profile.poolTag, this.gameObject);
+        }
+        else
+        {
+            // Phương án dự phòng: Nếu không có pooler hoặc poolTag, thì hủy luôn
+            gameObject.SetActive(false); // Hoặc Destroy(gameObject);
+            Debug.LogWarning("Không thể trả về kho! Tạm thời tắt đối tượng.");
+        }
     }
     #endregion
 

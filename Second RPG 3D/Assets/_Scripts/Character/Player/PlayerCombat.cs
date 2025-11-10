@@ -153,9 +153,10 @@ public class PlayerCombat : MonoBehaviour
     }
 
 
- 
+
     public void Hit()
     {
+
         if (currentAttackIndex < 0 || currentAttackIndex >= attacks.Count) return;
 
         AttackData currentAttackData = attacks[currentAttackIndex].attackData;
@@ -164,20 +165,48 @@ public class PlayerCombat : MonoBehaviour
         float finalDamage = playerStats.baseDamage * currentAttackData.damageMultiplier;
 
         Collider[] hitInfor = Physics.OverlapSphere(transform.position + transform.forward * 1.0f, currentAttackData.hitRange, currentAttackData.hitMask);
+
         foreach (Collider c in hitInfor)
         {
+            // --- LOGIC KIỂM TRA PHE PHÁI (THÊM MỚI) ---
+
+            // 1. Lấy thông tin Targetable của mục tiêu
+            Targetable targetInfo = c.GetComponentInParent<Targetable>();
+
+            // 2. Bỏ qua nếu đối tượng không thể bị nhắm tới (không có script Targetable)
+            if (targetInfo == null)
+            {
+                continue; // Bỏ qua vật thể này và xét vật thể tiếp theo
+            }
+
+            // 3. Bỏ qua nếu mục tiêu là chính mình hoặc cùng phe Player
+            //    (Giả sử Player luôn thuộc phe Faction.Player)
+            if (targetInfo.gameObject == this.gameObject || targetInfo.faction == Faction.Player)
+            {
+                continue; // Bỏ qua đồng đội và xét vật thể tiếp theo
+            }
+
+            // --- NẾU VƯỢT QUA CÁC BƯỚC KIỂM TRA, MỚI GÂY SÁT THƯƠNG ---
+            //Debug.Log($"<color=cyan>Player tấn công hợp lệ vào: {c.name}</color>");
+
             // --- Phần gây sát thương (giữ nguyên) ---
             c.gameObject.SendMessage("GetHit", finalDamage, SendMessageOptions.DontRequireReceiver);
 
-            // --- PHẦN THÊM MỚI: ÁP DỤNG LỰC ĐẨY ---
-            if (currentAttackData.knockbackForce > 0)
+            if (currentAttackData.knockbackForce > 0 || currentAttackData.knockupForce > 0)
             {
                 Rigidbody enemyRigidbody = c.GetComponent<Rigidbody>();
                 if (enemyRigidbody != null)
                 {
-                    Vector3 direction = (c.transform.position - transform.position).normalized;
-                    direction.y = 0.1f;
-                    enemyRigidbody.AddForce(direction.normalized * currentAttackData.knockbackForce, ForceMode.Impulse);
+                    // 1. Tính toán vector lực đẩy lùi (nằm ngang)
+                    Vector3 knockbackVector = (c.transform.position - transform.position).normalized;
+                    knockbackVector.y = 0;
+                    knockbackVector *= currentAttackData.knockbackForce;
+
+                    // 2. Tính toán vector lực hất tung (thẳng đứng)
+                    Vector3 knockupVector = Vector3.up * currentAttackData.knockupForce;
+
+                    // 3. Cộng hai vector lực lại và áp dụng một lần duy nhất
+                    enemyRigidbody.AddForce(knockbackVector + knockupVector, ForceMode.Impulse);
                 }
             }
         }

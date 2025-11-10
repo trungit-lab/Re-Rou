@@ -1,4 +1,5 @@
 {
+    "version": 1,
     "name": "PlayerInputActions",
     "maps": [
         {
@@ -27,7 +28,7 @@
                     "name": "Jump",
                     "type": "Button",
                     "id": "8522be5a-9273-4211-a6d4-8991477eb688",
-                    "expectedControlType": "Button",
+                    "expectedControlType": "",
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false

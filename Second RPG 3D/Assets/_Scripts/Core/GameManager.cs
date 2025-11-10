@@ -1,4 +1,4 @@
-﻿// GameManager.cs (Phiên bản đã thêm chức năng quản lý chuột)
+﻿// FILE: GameManager.cs (Phiên bản nâng cấp cho Wave Spawner)
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
@@ -6,7 +6,6 @@ using UnityEngine;
 using UnityEngine.Rendering.PostProcessing;
 using UnityEngine.SceneManagement;
 
-// Đặt enum GameState ra ngoài để các script khác dễ truy cập
 public enum GameState
 {
     GAMEPLAY,
@@ -17,84 +16,96 @@ public enum GameState
 
 public class GameManager : MonoBehaviour
 {
-    // --- Singleton: Đảm bảo chỉ có một GameManager và dễ dàng truy cập ---
+    // --- Singleton: Giữ nguyên ---
     public static GameManager Instance { get; private set; }
 
-    // --- Trạng thái game ---
+    // Trong GameManager.cs, thêm vào khu vực UI Panels & Texts
+    [Header("Wave UI")]
+    public TMP_Text waveCountdownText; // Kéo Text đếm ngược vào đây
+    public TMP_Text currentWaveText;   // (Tùy chọn) Text hiển thị "Sóng 1/3"
+
+    // --- Trạng thái game: Giữ nguyên ---
     public GameState gameState;
 
     [Header("Core References")]
     public Transform player;
+    // --- THÊM MỚI: Kết nối đến Wave Spawner ---
+    [Tooltip("Kéo đối tượng WaveSpawner trong scene vào đây.")]
+    public WaveSpawner waveSpawner;
 
     [Header("UI Panels & Texts")]
     public GameObject pauseGame;
     public GameObject panelDie;
     public TMP_Text scoreDie;
-    public TMP_Text tx; // Giả sử đây là Text Score
+    public TMP_Text tx;
     public GameObject panelWin;
     public GameObject panelHuongDan;
     [Header("Monsters UI")]
-    public TMP_Text soLuong;
+    public TMP_Text soLuong; // Sẽ hiển thị số quái còn lại trong sóng
 
-    // --- Quản lý Kẻ địch (Tự động) ---
-    private List<BaseAIController> activeEnemies = new List<BaseAIController>();
+    // --- THAY ĐỔI: Danh sách này không còn cần thiết nữa ---
+    // GameManager không cần tự quản lý danh sách này, nó chỉ cần biết "số lượng".
+    // private List<BaseAIController> activeEnemies = new List<BaseAIController>();
+    private int enemiesRemaining; // Biến mới để theo dõi số lượng
 
+    // --- Các biến khác giữ nguyên ---
     [Header("Gem")]
-    public GameObject gemObject;
-
+    public TMP_Text diem;
+    private int score_d;
     [Header("Rain Manager")]
     public PostProcessVolume postB;
-    public ParticleSystem rainParticle;
-    private ParticleSystem.EmissionModule rainModule;
-    public int rainRateOverTime;
-    public int rainIncrement;
-    public float rainIncrementDelay;
 
-    [Header("Camera")]
-    public GameObject cam1;
-    public GameObject cam2;
-    public bool checkCam;
 
+
+    // --- Hàm Awake: Giữ nguyên ---
     private void Awake()
     {
-        // Thiết lập Singleton
-        if (Instance != null && Instance != this)
-        {
-            Destroy(gameObject);
-        }
-        else
-        {
-            Instance = this;
-        }
-
-        // Tự động tìm Player bằng Tag nếu chưa được gán trong Inspector
+        if (Instance != null && Instance != this) { Destroy(gameObject); }
+        else { Instance = this; }
         if (player == null)
         {
             GameObject playerObject = GameObject.FindGameObjectWithTag("Player");
             if (playerObject != null) player = playerObject.transform;
-            else Debug.LogError("GAME MANAGER ERROR: Không tìm thấy đối tượng nào có tag 'Player' trong scene!");
         }
     }
 
+    // --- HÀM START: ĐƯỢC ĐƠN GIẢN HÓA RẤT NHIỀU ---
     void Start()
     {
-        if (rainParticle != null) rainModule = rainParticle.emission;
+        // if (rainParticle != null) rainModule = rainParticle.emission; // Sẽ gây lỗi nếu bạn không có các biến rain cũ, tôi tạm comment lại
 
-        // Tự động tìm và đếm tất cả kẻ địch trong màn chơi
-        BaseAIController[] allEnemies = FindObjectsOfType<BaseAIController>();
-        activeEnemies.AddRange(allEnemies);
-        if (soLuong != null) soLuong.text = activeEnemies.Count.ToString();
-        Debug.Log("GameManager: Started with " + activeEnemies.Count + " enemies.");
+        // --- THAY ĐỔI: Xóa bỏ hoàn toàn logic đếm quái cũ ---
+        // Không cần tự đi tìm quái nữa, WaveSpawner sẽ thông báo cho chúng ta.
+        enemiesRemaining = 0;
+        if (soLuong != null) soLuong.text = enemiesRemaining.ToString();
 
-        // Ẩn tất cả các panel không cần thiết
+        // Ẩn tất cả các panel không cần thiết (giữ nguyên)
         if (panelDie != null) panelDie.SetActive(false);
         if (panelWin != null) panelWin.SetActive(false);
         if (pauseGame != null) pauseGame.SetActive(false);
         if (panelHuongDan != null) panelHuongDan.SetActive(false);
 
-        // Bắt đầu game
+        // Bắt đầu game (giữ nguyên)
         ChangeGameState(GameState.GAMEPLAY);
     }
+
+
+    public void UpdateWaveUI(int currentWave, int totalWaves, float countdown)
+    {
+        if (currentWaveText != null)
+        {
+            currentWaveText.text = $"{currentWave}";
+        }
+
+        if (waveCountdownText != null)
+        {
+            // Định dạng thời gian thành phút:giây
+            int minutes = Mathf.FloorToInt(countdown / 60);
+            int seconds = Mathf.FloorToInt(countdown % 60);
+            waveCountdownText.text = $"{minutes:00}:{seconds:00}";
+        }
+    }
+
 
     // === THÊM MỚI: Hàm quản lý con trỏ chuột ===
     private void SetCursorState(bool locked)
@@ -152,22 +163,39 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    // --- HÀM TỰ ĐỘNG GỌI BỞI KẺ ĐỊCH ---
-    public void OnEnemyDefeated(BaseAIController defeatedEnemy)
+
+    // --- HÀM THÊM MỚI: Được WaveSpawner gọi khi một sóng mới bắt đầu ---
+    public void OnWaveStarted(int enemyCountInWave)
     {
-        if (activeEnemies.Contains(defeatedEnemy))
+        enemiesRemaining = enemyCountInWave;
+        Debug.Log("GameManager: Một sóng mới bắt đầu với " + enemyCountInWave + " kẻ địch.");
+        if (soLuong != null)
         {
-            activeEnemies.Remove(defeatedEnemy);
-            if (soLuong != null) soLuong.text = activeEnemies.Count.ToString();
-            Debug.Log("GameManager: An enemy was defeated. Remaining: " + activeEnemies.Count);
+            soLuong.text = enemyCountInWave.ToString();
         }
 
-        // Tự động kiểm tra điều kiện thắng
-        if (activeEnemies.Count == 0)
+    }
+
+    // --- HÀM OnEnemyDefeated: ĐƯỢC CẬP NHẬT LOGIC ---
+    public void OnEnemyDefeated(BaseAIController defeatedEnemy)
+    {
+        enemiesRemaining--;
+        
+        if (soLuong != null)
         {
-            ChangeGameState(GameState.WIN);
+            soLuong.text = enemiesRemaining.ToString();
+        }
+        Debug.Log("GameManager: Một kẻ địch bị tiêu diệt. Còn lại: " + enemiesRemaining);
+
+        // THAY ĐỔI: Không cần tự kiểm tra điều kiện thắng ở đây nữa.
+        // Thay vào đó, báo cho WaveSpawner biết để nó quyết định.
+        if (waveSpawner != null)
+        {
+            waveSpawner.OnAnEnemyWasKilled();
+
         }
     }
+
 
     // --- CÁC HÀM TIỆN ÍCH KHÁC ---
 
@@ -183,12 +211,12 @@ public class GameManager : MonoBehaviour
         tx.text = tam.ToString();
     }
 
-    public void CreateGem(Transform pos)
-    {
-        Vector3 hi = pos.position;
-        hi.y += 0.5f;
-        Instantiate(gemObject, hi, Quaternion.Euler(90f, 0f, 0f));
-    }
+    //public void CreateGem(Transform pos)
+    //{
+    //    Vector3 hi = pos.position;
+    //    hi.y += 0.5f;
+    //    Instantiate(gemObject, hi, Quaternion.Euler(90f, 0f, 0f));
+    //}
 
     // --- CÁC HÀM ĐIỀU KHIỂN NÚT BẤM (ĐÃ CẢI TIẾN) ---
 
@@ -238,33 +266,7 @@ public class GameManager : MonoBehaviour
         StartCoroutine("PostBManager", isRain);
     }
 
-    IEnumerator RainManager(bool isRain)
-    {
-        // Đảm bảo rainModule đã được khởi tạo
-        if (rainParticle == null) yield break;
 
-        switch (isRain)
-        {
-            case true:
-                // Tăng dần hiệu ứng mưa
-                for (float i = rainModule.rateOverTime.constant; i < rainRateOverTime; i += rainIncrement)
-                {
-                    rainModule.rateOverTime = i;
-                    yield return new WaitForSeconds(rainIncrementDelay);
-                }
-                rainModule.rateOverTime = rainRateOverTime;
-                break;
-            case false:
-                // Giảm dần hiệu ứng mưa
-                for (float i = rainModule.rateOverTime.constant; i > 0; i -= rainIncrement)
-                {
-                    rainModule.rateOverTime = i;
-                    yield return new WaitForSeconds(rainIncrementDelay);
-                }
-                rainModule.rateOverTime = 0;
-                break;
-        }
-    }
 
     IEnumerator PostBManager(bool isRain)
     {

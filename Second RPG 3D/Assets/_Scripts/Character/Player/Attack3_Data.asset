@@ -18,7 +18,7 @@ MonoBehaviour:
   attackCooldown: 0.7
   hitMask:
     serializedVersion: 2
-    m_Bits: 128
+    m_Bits: 136
   knockbackForce: 2
   isDashSkill: 0
   dashSpeed: 20
