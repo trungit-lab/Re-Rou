@@ -10,7 +10,7 @@ public class PlayerMovement : MonoBehaviour
     private Vector2 moveInput;
 
     [Header("Movement Stats")]
-    public float movementSpeed = 5f;
+    [SerializeField] private float movementSpeed = 5f;
     public float rotationSpeed = 10f; // Tốc độ xoay của nhân vật
 
     // *** SỬA ĐỔI 1: THÊM BIẾN THAM CHIẾU CAMERA ***
@@ -44,13 +44,16 @@ public class PlayerMovement : MonoBehaviour
         HandleMovement();
     }
 
+    public void SetMovementSpeed(float newSpeed)
+    {
+        movementSpeed = newSpeed;
+    }
+
     public void SetMoveInput(Vector2 input)
     {
         moveInput = input;
     }
 
-    // *** SỬA ĐỔI 2: VIẾT LẠI HOÀN TOÀN HÀM HandleMovement ***
-    // Đã xóa bỏ toàn bộ khối #if để tạo ra một logic duy nhất
     private void HandleMovement()
     {
         // Tính hướng di chuyển dựa vào hướng camera

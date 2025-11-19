@@ -1,4 +1,4 @@
-﻿// FILE: WaveSpawner.cs (Phiên bản đã sửa lỗi)
+﻿// FILE: WaveSpawner.cs (Phiên bản cuối cùng, hỗ trợ cả 2 chế độ chơi)
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -11,12 +11,12 @@ public class WaveSpawner : MonoBehaviour
     [Tooltip("Danh sách các điểm mà quái có thể xuất hiện.")]
     public Transform[] spawnPoints;
 
-    [Tooltip("Danh sách các mục tiêu chính (ví dụ: cổng, nhà chính) mà quái có thể tấn công.")]
+    [Tooltip("Danh sách các mục tiêu chính mà quái có thể tấn công.")]
     public List<Transform> mainObjectives;
 
     private int currentWaveIndex = 0;
-    private int enemiesAliveInWave = 0;
-    
+    private int enemiesAlive = 0;
+    private bool isSpawningWave = false; // Biến cờ quan trọng cho chế độ Annihilation
 
     void Start()
     {
@@ -25,64 +25,107 @@ public class WaveSpawner : MonoBehaviour
             Debug.LogError("Spawner Script chưa được gán hoặc không có sóng nào!");
             return;
         }
-        // Bắt đầu Coroutine chính quản lý toàn bộ màn chơi
-        StartCoroutine(LevelFlowCoroutine());
+
+        // Dựa vào chế độ chơi trong kịch bản để gọi Coroutine tương ứng
+        if (spawnerScript.gameMode == GameMode.Annihilation)
+        {
+            StartCoroutine(AnnihilationFlowCoroutine());
+        }
+        else // TimedSurvival
+        {
+            StartCoroutine(TimedSurvivalFlowCoroutine());
+        }
     }
 
-    // Coroutine chính điều khiển luồng của cả màn chơi
-    private IEnumerator LevelFlowCoroutine()
+    // --- LOGIC CHO CHẾ ĐỘ TIÊU DIỆT (GIẾT HẾT) ---
+    private IEnumerator AnnihilationFlowCoroutine()
     {
-        // Lặp qua từng sóng trong kịch bản
+        Debug.Log("Bắt đầu chế độ chơi: Annihilation");
+        for (currentWaveIndex = 0; currentWaveIndex < spawnerScript.waves.Count; currentWaveIndex++)
+        {
+            Wave currentWave = spawnerScript.waves[currentWaveIndex];
+            GameManager.Instance.UpdateWaveUI($"{currentWaveIndex + 1}/{spawnerScript.waves.Count}");
+
+            yield return StartCoroutine(SpawnWaveCoroutine(currentWave));
+
+            // Chờ cho đến khi tất cả quái vật của sóng này bị tiêu diệt
+            while (enemiesAlive > 0)
+            {
+                yield return null;
+            }
+
+            Debug.Log("Đã hoàn thành sóng: " + currentWave.waveName);
+            if (currentWaveIndex < spawnerScript.waves.Count - 1)
+            {
+                yield return new WaitForSeconds(3f); // Thời gian nghỉ giữa các sóng
+            }
+        }
+        Debug.Log("CHIẾN THẮNG! (Annihilation)");
+        GameManager.Instance.ChangeGameState(GameState.WIN);
+    }
+
+    // --- LOGIC CHO CHẾ ĐỘ SINH TỒN (THEO THỜI GIAN) ---
+    private IEnumerator TimedSurvivalFlowCoroutine()
+    {
+        Debug.Log("Bắt đầu chế độ chơi: Timed Survival");
         for (currentWaveIndex = 0; currentWaveIndex < spawnerScript.waves.Count; currentWaveIndex++)
         {
             Wave currentWave = spawnerScript.waves[currentWaveIndex];
 
-            // Bắt đầu sinh ra quái của sóng hiện tại (không cần chờ nó kết thúc)
             StartCoroutine(SpawnWaveCoroutine(currentWave));
 
-            float countdown = currentWave.timeUntilNextWave;
+            float countdown = (currentWaveIndex == spawnerScript.waves.Count - 1)
+                ? spawnerScript.finalWaveSurvivalTime
+                : currentWave.timeUntilNextWave;
 
-            // Bắt đầu đếm ngược đến sóng tiếp theo
             while (countdown > 0)
             {
-                // Cập nhật UI mỗi frame
-                GameManager.Instance.UpdateWaveUI(currentWaveIndex + 1, spawnerScript.waves.Count, countdown);
-
+                string message = (currentWaveIndex == spawnerScript.waves.Count - 1)
+                    ? $"SỐNG SÓT!"
+                    : $"Sóng {currentWaveIndex + 1}/{spawnerScript.waves.Count}";
+                GameManager.Instance.UpdateWaveUI(message, countdown);
                 countdown -= Time.deltaTime;
-                yield return null; // Chờ đến frame tiếp theo
+                yield return null;
             }
         }
-
-        // Sau khi vòng lặp kết thúc (tức là bộ đếm của sóng cuối cùng đã hết)
-        // -> Người chơi đã sống sót!
-        Debug.Log("CHIẾN THẮNG! Đã sống sót qua tất cả các sóng!");
-        GameManager.Instance.UpdateWaveUI(currentWaveIndex, spawnerScript.waves.Count, 0); // Cập nhật UI lần cuối
+        Debug.Log("CHIẾN THẮNG! (TimedSurvival)");
+        GameManager.Instance.UpdateWaveUI("ĐÃ SỐNG SÓT!", -1);
         GameManager.Instance.ChangeGameState(GameState.WIN);
     }
 
-    // Coroutine này chỉ chịu trách nhiệm sinh ra quái của MỘT sóng
+    // --- CÁC HÀM HỖ TRỢ (DÙNG CHUNG CHO CẢ 2 CHẾ ĐỘ) ---
+
+    // Chịu trách nhiệm sinh ra TẤT CẢ quái của MỘT sóng
     private IEnumerator SpawnWaveCoroutine(Wave wave)
     {
-        Debug.Log("Bắt đầu sinh quái cho sóng: " + wave.waveName);
+        isSpawningWave = true;
+
+        int enemiesToSpawnInThisWave = 0;
         foreach (var group in wave.spawnGroups)
         {
-            // Chạy Coroutine sinh ra từng nhóm quái song song
+            enemiesToSpawnInThisWave += group.count;
+        }
+
+        enemiesAlive += enemiesToSpawnInThisWave;
+        GameManager.Instance.OnWaveStarted(enemiesAlive);
+
+        foreach (var group in wave.spawnGroups)
+        {
             StartCoroutine(SpawnGroupCoroutine(group));
         }
-        yield break; // Kết thúc ngay, không cần chờ đợi gì cả
+
+        // Đợi một chút để đảm bảo coroutine cuối cùng được khởi chạy
+        yield return new WaitForEndOfFrame();
+        isSpawningWave = false;
     }
 
-    // Coroutine này sinh ra MỘT NHÓM QUÁI (giữ nguyên logic cũ)
+    // Chịu trách nhiệm sinh ra MỘT NHÓM quái
     private IEnumerator SpawnGroupCoroutine(SpawnGroup group)
     {
         yield return new WaitForSeconds(group.spawnDelay);
         for (int i = 0; i < group.count; i++)
         {
-            if (spawnPoints.Length == 0)
-            {
-                Debug.LogError("WaveSpawner chưa có Spawn Points nào được gán!");
-                yield break;
-            }
+            if (spawnPoints.Length == 0) { yield break; }
             Transform spawnPoint = spawnPoints[Random.Range(0, spawnPoints.Length)];
             GameObject enemyGO = ObjectPooler.Instance.SpawnFromPool(group.enemyPrefab.name, spawnPoint.position, spawnPoint.rotation);
 
@@ -101,9 +144,12 @@ public class WaveSpawner : MonoBehaviour
             yield return new WaitForSeconds(group.delayBetweenSpawns);
         }
     }
+
+    // Hàm này được GameManager gọi khi một kẻ địch bị tiêu diệt
     public void OnAnEnemyWasKilled()
     {
-        // Logic tính điểm hoặc kiểm tra nhiệm vụ phụ có thể được viết ở đây
-        Debug.Log("Một kẻ địch đã bị tiêu diệt. Cộng điểm!");
+        enemiesAlive--;
+        // Cập nhật lại UI tổng số quái đang sống
+        GameManager.Instance.OnWaveStarted(enemiesAlive);
     }
 }

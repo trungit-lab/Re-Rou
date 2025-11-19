@@ -192,6 +192,8 @@ public class PlayerCombat : MonoBehaviour
             // --- Phần gây sát thương (giữ nguyên) ---
             c.gameObject.SendMessage("GetHit", finalDamage, SendMessageOptions.DontRequireReceiver);
 
+            GameManager.Instance.TriggerHitStop(0.08f); // Thử với 0.08 giây
+
             if (currentAttackData.knockbackForce > 0 || currentAttackData.knockupForce > 0)
             {
                 Rigidbody enemyRigidbody = c.GetComponent<Rigidbody>();

@@ -12,7 +12,7 @@ public class SpawnGroup
     public float spawnDelay;
     public float delayBetweenSpawns;
     [Tooltip("Chỉ định mục tiêu cho nhóm quái này. -1 = không chỉ định. 0 = mục tiêu đầu tiên trong danh sách của Spawner, 1 = mục tiêu thứ hai,...")]
-    public int objectiveIndex = -1; // <-- THÊM DÒNG NÀY
+    public int objectiveIndex = -1; 
     
 }
 
@@ -24,9 +24,23 @@ public class Wave
     public float timeUntilNextWave = 60f;
 }
 
+public enum GameMode
+{
+    Annihilation, // Chế độ Tiêu Diệt
+    TimedSurvival // Chế độ Sinh Tồn
+}
+
 [CreateAssetMenu(fileName = "New Level Spawner Script", menuName = "Spawner/Level Spawner Script")]
 public class LevelSpawnerScript : ScriptableObject
 {
-    public List<Wave> waves;
+    [Header("Game Mode Settings")]
+    [Tooltip("Chọn chế độ chơi cho kịch bản này.")]
+    public GameMode gameMode;
 
+    [Tooltip("Chỉ dùng cho TimedSurvival. Thời gian người chơi phải sống sót ở sóng CUỐI CÙNG để thắng.")]
+    public float finalWaveSurvivalTime = 180f; // 3 phút
+
+    [Header("Wave Configuration")]
+    [Tooltip("Danh sách tất cả các sóng sẽ xuất hiện trong màn chơi này.")]
+    public List<Wave> waves;
 }

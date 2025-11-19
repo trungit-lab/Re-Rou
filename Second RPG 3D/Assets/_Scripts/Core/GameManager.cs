@@ -18,7 +18,8 @@ public class GameManager : MonoBehaviour
 {
     // --- Singleton: Giữ nguyên ---
     public static GameManager Instance { get; private set; }
-
+    // hitStop
+    private Coroutine hitStopCoroutine;
     // Trong GameManager.cs, thêm vào khu vực UI Panels & Texts
     [Header("Wave UI")]
     public TMP_Text waveCountdownText; // Kéo Text đếm ngược vào đây
@@ -90,19 +91,28 @@ public class GameManager : MonoBehaviour
     }
 
 
-    public void UpdateWaveUI(int currentWave, int totalWaves, float countdown)
+    public void UpdateWaveUI(string message, float countdown = -1f)
     {
         if (currentWaveText != null)
         {
-            currentWaveText.text = $"{currentWave}";
+            currentWaveText.text = message;
         }
 
         if (waveCountdownText != null)
         {
-            // Định dạng thời gian thành phút:giây
-            int minutes = Mathf.FloorToInt(countdown / 60);
-            int seconds = Mathf.FloorToInt(countdown % 60);
-            waveCountdownText.text = $"{minutes:00}:{seconds:00}";
+            if (countdown >= 0)
+            {
+                waveCountdownText.gameObject.SetActive(true);
+                int minutes = Mathf.FloorToInt(countdown / 60);
+                int seconds = Mathf.FloorToInt(countdown % 60);
+                waveCountdownText.text = $"Sóng tiếp theo: {minutes:00}:{seconds:00}";
+            }
+            else
+            {
+                // Ẩn đi nếu không có đếm ngược
+                Debug.Log("Ẩn đếm ngược sóng tiếp theo.");
+                waveCountdownText.gameObject.SetActive(false);
+            }
         }
     }
 
@@ -267,7 +277,28 @@ public class GameManager : MonoBehaviour
     }
 
 
+    public void TriggerHitStop(float duration)
+    {
+        // Chỉ chạy Hit Stop khi game đang ở trạng thái GAMEPLAY
+        if (gameState != GameState.GAMEPLAY) return;
 
+        // Dừng lại coroutine cũ nếu nó đang chạy để tránh xung đột
+        if (hitStopCoroutine != null)
+        {
+            Time.timeScale = 1f; // Đảm bảo trả lại timeScale trước khi dừng
+            StopCoroutine(hitStopCoroutine);
+        }
+
+        hitStopCoroutine = StartCoroutine(HitStopCoroutine(duration));
+    }
+
+    private IEnumerator HitStopCoroutine(float duration)
+    {
+        Time.timeScale = 0.01f; // Đóng băng game (gần bằng 0)
+        yield return new WaitForSecondsRealtime(duration); // Chờ một khoảng thời gian thực, không bị ảnh hưởng bởi Time.timeScale
+        Time.timeScale = 1f; // Trả lại tốc độ bình thường
+        hitStopCoroutine = null;
+    }
     IEnumerator PostBManager(bool isRain)
     {
         // Đảm bảo PostProcessVolume đã được gán

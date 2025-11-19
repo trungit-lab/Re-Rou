@@ -243,6 +243,8 @@ public abstract class BaseAIController : MonoBehaviour
                 {
               
                     playerStats.GetHit(damageToDeal);
+
+                    GameManager.Instance.TriggerHitStop(0.05f); // Hit stop của AI có thể nhẹ hơn
                 }
                 else
                 {

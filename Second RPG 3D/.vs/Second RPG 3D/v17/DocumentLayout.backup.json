@@ -3,48 +3,56 @@
   "WorkspaceRootPath": "D:\\Unity\\Unity Project\\Re-Rou\\Second RPG 3D\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{D7784F96-745D-C839-2602-11796CD5C997}|Assembly-CSharp.csproj|D:\\Unity\\Unity Project\\Re-Rou\\Second RPG 3D\\assets\\_scripts\\ai\\baseaicontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{D7784F96-745D-C839-2602-11796CD5C997}|Assembly-CSharp.csproj|solutionrelative:assets\\_scripts\\ai\\baseaicontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{D7784F96-745D-C839-2602-11796CD5C997}|Assembly-CSharp.csproj|d:\\unity\\unity project\\re-rou\\second rpg 3d\\assets\\_scripts\\character\\player\\upgradedata.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{D7784F96-745D-C839-2602-11796CD5C997}|Assembly-CSharp.csproj|solutionrelative:assets\\_scripts\\character\\player\\upgradedata.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{D7784F96-745D-C839-2602-11796CD5C997}|Assembly-CSharp.csproj|d:\\unity\\unity project\\re-rou\\second rpg 3d\\assets\\_scripts\\core\\levelspawnerscript.cs..cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{D7784F96-745D-C839-2602-11796CD5C997}|Assembly-CSharp.csproj|solutionrelative:assets\\_scripts\\core\\levelspawnerscript.cs..cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{D7784F96-745D-C839-2602-11796CD5C997}|Assembly-CSharp.csproj|d:\\unity\\unity project\\re-rou\\second rpg 3d\\assets\\_scripts\\core\\wavespawner.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{D7784F96-745D-C839-2602-11796CD5C997}|Assembly-CSharp.csproj|solutionrelative:assets\\_scripts\\core\\wavespawner.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{D7784F96-745D-C839-2602-11796CD5C997}|Assembly-CSharp.csproj|d:\\unity\\unity project\\re-rou\\second rpg 3d\\assets\\_scripts\\character\\player\\player_controller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{D7784F96-745D-C839-2602-11796CD5C997}|Assembly-CSharp.csproj|solutionrelative:assets\\_scripts\\character\\player\\player_controller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{D7784F96-745D-C839-2602-11796CD5C997}|Assembly-CSharp.csproj|D:\\Unity\\Unity Project\\Re-Rou\\Second RPG 3D\\assets\\_scripts\\core\\gamemanager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{D7784F96-745D-C839-2602-11796CD5C997}|Assembly-CSharp.csproj|solutionrelative:assets\\_scripts\\core\\gamemanager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{D7784F96-745D-C839-2602-11796CD5C997}|Assembly-CSharp.csproj|D:\\Unity\\Unity Project\\Re-Rou\\Second RPG 3D\\assets\\_scripts\\core\\rainmanager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{D7784F96-745D-C839-2602-11796CD5C997}|Assembly-CSharp.csproj|solutionrelative:assets\\_scripts\\core\\rainmanager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|d:\\unity\\unity project\\re-rou\\second rpg 3d\\assets\\_scripts\\core\\newmonobehaviourscript.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:assets\\_scripts\\core\\newmonobehaviourscript.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{D7784F96-745D-C839-2602-11796CD5C997}|Assembly-CSharp.csproj|D:\\Unity\\Unity Project\\Re-Rou\\Second RPG 3D\\assets\\_scripts\\ai\\aistates.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{D7784F96-745D-C839-2602-11796CD5C997}|Assembly-CSharp.csproj|solutionrelative:assets\\_scripts\\ai\\aistates.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{D7784F96-745D-C839-2602-11796CD5C997}|Assembly-CSharp.csproj|D:\\Unity\\Unity Project\\Re-Rou\\Second RPG 3D\\assets\\_scripts\\ai\\aiprofile.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{D7784F96-745D-C839-2602-11796CD5C997}|Assembly-CSharp.csproj|solutionrelative:assets\\_scripts\\ai\\aiprofile.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{D7784F96-745D-C839-2602-11796CD5C997}|Assembly-CSharp.csproj|D:\\Unity\\Unity Project\\Re-Rou\\Second RPG 3D\\assets\\_scripts\\character\\player\\attackdata.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{D7784F96-745D-C839-2602-11796CD5C997}|Assembly-CSharp.csproj|solutionrelative:assets\\_scripts\\character\\player\\attackdata.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{D7784F96-745D-C839-2602-11796CD5C997}|Assembly-CSharp.csproj|D:\\Unity\\Unity Project\\Re-Rou\\Second RPG 3D\\assets\\_scripts\\core\\enemyspawner.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{D7784F96-745D-C839-2602-11796CD5C997}|Assembly-CSharp.csproj|solutionrelative:assets\\_scripts\\core\\enemyspawner.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{D7784F96-745D-C839-2602-11796CD5C997}|Assembly-CSharp.csproj|D:\\Unity\\Unity Project\\Re-Rou\\Second RPG 3D\\assets\\_scripts\\ai\\baseaicontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{D7784F96-745D-C839-2602-11796CD5C997}|Assembly-CSharp.csproj|solutionrelative:assets\\_scripts\\ai\\baseaicontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{D7784F96-745D-C839-2602-11796CD5C997}|Assembly-CSharp.csproj|D:\\Unity\\Unity Project\\Re-Rou\\Second RPG 3D\\assets\\_scripts\\character\\player\\playercombat.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{D7784F96-745D-C839-2602-11796CD5C997}|Assembly-CSharp.csproj|solutionrelative:assets\\_scripts\\character\\player\\playercombat.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{D7784F96-745D-C839-2602-11796CD5C997}|Assembly-CSharp.csproj|D:\\Unity\\Unity Project\\Re-Rou\\Second RPG 3D\\assets\\_scripts\\ai\\aistates.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{D7784F96-745D-C839-2602-11796CD5C997}|Assembly-CSharp.csproj|solutionrelative:assets\\_scripts\\ai\\aistates.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{D7784F96-745D-C839-2602-11796CD5C997}|Assembly-CSharp.csproj|D:\\Unity\\Unity Project\\Re-Rou\\Second RPG 3D\\assets\\_scripts\\core\\gamemanager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{D7784F96-745D-C839-2602-11796CD5C997}|Assembly-CSharp.csproj|solutionrelative:assets\\_scripts\\core\\gamemanager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{D7784F96-745D-C839-2602-11796CD5C997}|Assembly-CSharp.csproj|D:\\Unity\\Unity Project\\Re-Rou\\Second RPG 3D\\assets\\_scripts\\core\\levelspawnerscript.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{D7784F96-745D-C839-2602-11796CD5C997}|Assembly-CSharp.csproj|solutionrelative:assets\\_scripts\\core\\levelspawnerscript.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{D7784F96-745D-C839-2602-11796CD5C997}|Assembly-CSharp.csproj|D:\\Unity\\Unity Project\\Re-Rou\\Second RPG 3D\\assets\\_scripts\\core\\enemyspawner.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{D7784F96-745D-C839-2602-11796CD5C997}|Assembly-CSharp.csproj|solutionrelative:assets\\_scripts\\core\\enemyspawner.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{D7784F96-745D-C839-2602-11796CD5C997}|Assembly-CSharp.csproj|D:\\Unity\\Unity Project\\Re-Rou\\Second RPG 3D\\assets\\_scripts\\core\\objectpooler.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{D7784F96-745D-C839-2602-11796CD5C997}|Assembly-CSharp.csproj|solutionrelative:assets\\_scripts\\core\\objectpooler.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{D7784F96-745D-C839-2602-11796CD5C997}|Assembly-CSharp.csproj|D:\\Unity\\Unity Project\\Re-Rou\\Second RPG 3D\\assets\\_scripts\\character\\player\\player_controller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{D7784F96-745D-C839-2602-11796CD5C997}|Assembly-CSharp.csproj|solutionrelative:assets\\_scripts\\character\\player\\player_controller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{D7784F96-745D-C839-2602-11796CD5C997}|Assembly-CSharp.csproj|D:\\Unity\\Unity Project\\Re-Rou\\Second RPG 3D\\assets\\_scripts\\core\\rainmanager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{D7784F96-745D-C839-2602-11796CD5C997}|Assembly-CSharp.csproj|solutionrelative:assets\\_scripts\\core\\rainmanager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{D7784F96-745D-C839-2602-11796CD5C997}|Assembly-CSharp.csproj|D:\\Unity\\Unity Project\\Re-Rou\\Second RPG 3D\\assets\\_scripts\\character\\player\\attackdata.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{D7784F96-745D-C839-2602-11796CD5C997}|Assembly-CSharp.csproj|solutionrelative:assets\\_scripts\\character\\player\\attackdata.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{D7784F96-745D-C839-2602-11796CD5C997}|Assembly-CSharp.csproj|D:\\Unity\\Unity Project\\Re-Rou\\Second RPG 3D\\assets\\_scripts\\character\\slime\\slimeai.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
@@ -65,34 +73,6 @@
     {
       "AbsoluteMoniker": "D:0:0:{D7784F96-745D-C839-2602-11796CD5C997}|Assembly-CSharp.csproj|D:\\Unity\\Unity Project\\Re-Rou\\Second RPG 3D\\assets\\_scripts\\character\\player\\playermovement.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{D7784F96-745D-C839-2602-11796CD5C997}|Assembly-CSharp.csproj|solutionrelative:assets\\_scripts\\character\\player\\playermovement.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|D:\\Unity\\Unity Project\\Re-Rou\\Second RPG 3D\\Assets\\Scripts\\AIStates.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:Assets\\Scripts\\AIStates.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|D:\\Unity\\Unity Project\\Re-Rou\\Second RPG 3D\\Assets\\Scripts\\attackdone.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:Assets\\Scripts\\attackdone.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|D:\\Unity\\Unity Project\\Re-Rou\\Second RPG 3D\\Assets\\Scripts\\GameManager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:Assets\\Scripts\\GameManager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|D:\\Unity\\Unity Project\\Re-Rou\\Second RPG 3D\\Assets\\Scripts\\PlayerController.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:Assets\\Scripts\\PlayerController.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|D:\\Unity\\Unity Project\\Re-Rou\\Second RPG 3D\\Assets\\Scripts\\SlimeAI.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:Assets\\Scripts\\SlimeAI.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|D:\\Unity\\Unity Project\\Re-Rou\\Second RPG 3D\\Assets\\Scripts\\RainManager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:Assets\\Scripts\\RainManager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|D:\\Unity\\Unity Project\\Re-Rou\\Second RPG 3D\\Assets\\Scripts\\Grass.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:Assets\\Scripts\\Grass.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
   "DocumentGroupContainers": [
@@ -102,7 +82,7 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 12,
+          "SelectedChildIndex": 3,
           "Children": [
             {
               "$type": "Bookmark",
@@ -118,58 +98,45 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 2,
-              "Title": "Player_Controller.cs",
-              "DocumentMoniker": "D:\\Unity\\Unity Project\\Re-Rou\\Second RPG 3D\\Assets\\_Scripts\\Character\\Player\\Player_Controller.cs",
-              "RelativeDocumentMoniker": "Assets\\_Scripts\\Character\\Player\\Player_Controller.cs",
-              "ToolTip": "D:\\Unity\\Unity Project\\Re-Rou\\Second RPG 3D\\Assets\\_Scripts\\Character\\Player\\Player_Controller.cs",
-              "RelativeToolTip": "Assets\\_Scripts\\Character\\Player\\Player_Controller.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAADUAAAAqAAAAAAAAAA==",
+              "DocumentIndex": 0,
+              "Title": "UpgradeData.cs",
+              "DocumentMoniker": "D:\\Unity\\Unity Project\\Re-Rou\\Second RPG 3D\\Assets\\_Scripts\\Character\\Player\\UpgradeData.cs",
+              "RelativeDocumentMoniker": "Assets\\_Scripts\\Character\\Player\\UpgradeData.cs",
+              "ToolTip": "D:\\Unity\\Unity Project\\Re-Rou\\Second RPG 3D\\Assets\\_Scripts\\Character\\Player\\UpgradeData.cs",
+              "RelativeToolTip": "Assets\\_Scripts\\Character\\Player\\UpgradeData.cs",
+              "ViewState": "AgIAAAMAAAAAAAAAAAAAABgAAAAlAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-11-09T20:51:41.531Z",
+              "WhenOpened": "2025-11-18T21:38:24.02Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
               "DocumentIndex": 1,
-              "Title": "LevelSpawnerScript.cs..cs",
-              "DocumentMoniker": "D:\\Unity\\Unity Project\\Re-Rou\\Second RPG 3D\\Assets\\_Scripts\\Core\\LevelSpawnerScript.cs..cs",
-              "RelativeDocumentMoniker": "Assets\\_Scripts\\Core\\LevelSpawnerScript.cs..cs",
-              "ToolTip": "D:\\Unity\\Unity Project\\Re-Rou\\Second RPG 3D\\Assets\\_Scripts\\Core\\LevelSpawnerScript.cs..cs",
-              "RelativeToolTip": "Assets\\_Scripts\\Core\\LevelSpawnerScript.cs..cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAABoAAAABAAAAAAAAAA==",
+              "Title": "WaveSpawner.cs",
+              "DocumentMoniker": "D:\\Unity\\Unity Project\\Re-Rou\\Second RPG 3D\\Assets\\_Scripts\\Core\\WaveSpawner.cs",
+              "RelativeDocumentMoniker": "Assets\\_Scripts\\Core\\WaveSpawner.cs",
+              "ToolTip": "D:\\Unity\\Unity Project\\Re-Rou\\Second RPG 3D\\Assets\\_Scripts\\Core\\WaveSpawner.cs",
+              "RelativeToolTip": "Assets\\_Scripts\\Core\\WaveSpawner.cs",
+              "ViewState": "AgIAAAgAAAAAAAAAAAAAwBQAAAAQAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-11-09T20:50:40.868Z",
+              "WhenOpened": "2025-11-10T19:46:36.91Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 5,
-              "Title": "NewMonoBehaviourScript.cs",
-              "DocumentMoniker": "D:\\Unity\\Unity Project\\Re-Rou\\Second RPG 3D\\Assets\\_Scripts\\Core\\NewMonoBehaviourScript.cs",
-              "RelativeDocumentMoniker": "Assets\\_Scripts\\Core\\NewMonoBehaviourScript.cs",
-              "ToolTip": "D:\\Unity\\Unity Project\\Re-Rou\\Second RPG 3D\\Assets\\_Scripts\\Core\\NewMonoBehaviourScript.cs",
-              "RelativeToolTip": "Assets\\_Scripts\\Core\\NewMonoBehaviourScript.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "DocumentIndex": 7,
+              "Title": "LevelSpawnerScript.cs",
+              "DocumentMoniker": "D:\\Unity\\Unity Project\\Re-Rou\\Second RPG 3D\\Assets\\_Scripts\\Core\\LevelSpawnerScript.cs",
+              "RelativeDocumentMoniker": "Assets\\_Scripts\\Core\\LevelSpawnerScript.cs",
+              "ToolTip": "D:\\Unity\\Unity Project\\Re-Rou\\Second RPG 3D\\Assets\\_Scripts\\Core\\LevelSpawnerScript.cs",
+              "RelativeToolTip": "Assets\\_Scripts\\Core\\LevelSpawnerScript.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAC0AAAABAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-11-09T20:50:20.271Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-11-10T19:17:48.009Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 12,
-              "Title": "PlayerStats.cs",
-              "DocumentMoniker": "D:\\Unity\\Unity Project\\Re-Rou\\Second RPG 3D\\Assets\\_Scripts\\Character\\Player\\PlayerStats.cs",
-              "RelativeDocumentMoniker": "Assets\\_Scripts\\Character\\Player\\PlayerStats.cs",
-              "ToolTip": "D:\\Unity\\Unity Project\\Re-Rou\\Second RPG 3D\\Assets\\_Scripts\\Character\\Player\\PlayerStats.cs",
-              "RelativeToolTip": "Assets\\_Scripts\\Character\\Player\\PlayerStats.cs",
-              "ViewState": "AgIAABYAAAAAAAAAAAAgwEgAAAAJAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-11-04T09:20:58.487Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 13,
+              "DocumentIndex": 15,
               "Title": "Targetable.cs",
               "DocumentMoniker": "D:\\Unity\\Unity Project\\Re-Rou\\Second RPG 3D\\Assets\\_Scripts\\AI\\Targetable.cs",
               "RelativeDocumentMoniker": "Assets\\_Scripts\\AI\\Targetable.cs",
@@ -181,7 +148,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 11,
+              "DocumentIndex": 13,
               "Title": "SlimeAI.cs",
               "DocumentMoniker": "D:\\Unity\\Unity Project\\Re-Rou\\Second RPG 3D\\Assets\\_Scripts\\Character\\Slime\\SlimeAI.cs",
               "RelativeDocumentMoniker": "Assets\\_Scripts\\Character\\Slime\\SlimeAI.cs",
@@ -205,45 +172,79 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 10,
-              "Title": "AIStates.cs",
-              "DocumentMoniker": "D:\\Unity\\Unity Project\\Re-Rou\\Second RPG 3D\\Assets\\_Scripts\\AI\\AIStates.cs",
-              "RelativeDocumentMoniker": "Assets\\_Scripts\\AI\\AIStates.cs",
-              "ToolTip": "D:\\Unity\\Unity Project\\Re-Rou\\Second RPG 3D\\Assets\\_Scripts\\AI\\AIStates.cs",
-              "RelativeToolTip": "Assets\\_Scripts\\AI\\AIStates.cs",
-              "ViewState": "AgIAAAMAAAAAAAAAAAAAAMUAAAAMAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-10-22T09:25:45.374Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 3,
+              "DocumentIndex": 6,
               "Title": "GameManager.cs",
               "DocumentMoniker": "D:\\Unity\\Unity Project\\Re-Rou\\Second RPG 3D\\Assets\\_Scripts\\Core\\GameManager.cs",
               "RelativeDocumentMoniker": "Assets\\_Scripts\\Core\\GameManager.cs",
               "ToolTip": "D:\\Unity\\Unity Project\\Re-Rou\\Second RPG 3D\\Assets\\_Scripts\\Core\\GameManager.cs",
               "RelativeToolTip": "Assets\\_Scripts\\Core\\GameManager.cs",
-              "ViewState": "AgIAAFQAAAAAAAAAAAAiwF0AAABlAAAAAAAAAA==",
+              "ViewState": "AgIAAB4BAAAAAAAAAAAYwDABAAAnAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-10-22T09:22:06.738Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-10-22T09:22:06.738Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 0,
+              "DocumentIndex": 2,
+              "Title": "AIStates.cs",
+              "DocumentMoniker": "D:\\Unity\\Unity Project\\Re-Rou\\Second RPG 3D\\Assets\\_Scripts\\AI\\AIStates.cs",
+              "RelativeDocumentMoniker": "Assets\\_Scripts\\AI\\AIStates.cs",
+              "ToolTip": "D:\\Unity\\Unity Project\\Re-Rou\\Second RPG 3D\\Assets\\_Scripts\\AI\\AIStates.cs",
+              "RelativeToolTip": "Assets\\_Scripts\\AI\\AIStates.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAMUAAAAMAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-10-22T09:25:45.374Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 10,
+              "Title": "Player_Controller.cs",
+              "DocumentMoniker": "D:\\Unity\\Unity Project\\Re-Rou\\Second RPG 3D\\Assets\\_Scripts\\Character\\Player\\Player_Controller.cs",
+              "RelativeDocumentMoniker": "Assets\\_Scripts\\Character\\Player\\Player_Controller.cs",
+              "ToolTip": "D:\\Unity\\Unity Project\\Re-Rou\\Second RPG 3D\\Assets\\_Scripts\\Character\\Player\\Player_Controller.cs",
+              "RelativeToolTip": "Assets\\_Scripts\\Character\\Player\\Player_Controller.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAADUAAAAqAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-11-09T20:51:41.531Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 14,
+              "Title": "PlayerStats.cs",
+              "DocumentMoniker": "D:\\Unity\\Unity Project\\Re-Rou\\Second RPG 3D\\Assets\\_Scripts\\Character\\Player\\PlayerStats.cs",
+              "RelativeDocumentMoniker": "Assets\\_Scripts\\Character\\Player\\PlayerStats.cs",
+              "ToolTip": "D:\\Unity\\Unity Project\\Re-Rou\\Second RPG 3D\\Assets\\_Scripts\\Character\\Player\\PlayerStats.cs",
+              "RelativeToolTip": "Assets\\_Scripts\\Character\\Player\\PlayerStats.cs",
+              "ViewState": "AgIAABYAAAAAAAAAAAAgwEgAAAAJAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-11-04T09:20:58.487Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 9,
+              "Title": "ObjectPooler.cs",
+              "DocumentMoniker": "D:\\Unity\\Unity Project\\Re-Rou\\Second RPG 3D\\Assets\\_Scripts\\Core\\ObjectPooler.cs",
+              "RelativeDocumentMoniker": "Assets\\_Scripts\\Core\\ObjectPooler.cs",
+              "ToolTip": "D:\\Unity\\Unity Project\\Re-Rou\\Second RPG 3D\\Assets\\_Scripts\\Core\\ObjectPooler.cs",
+              "RelativeToolTip": "Assets\\_Scripts\\Core\\ObjectPooler.cs",
+              "ViewState": "AgIAAA0AAAAAAAAAAAAQwDwAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-11-09T20:57:10.95Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
               "Title": "BaseAIController.cs",
               "DocumentMoniker": "D:\\Unity\\Unity Project\\Re-Rou\\Second RPG 3D\\Assets\\_Scripts\\AI\\BaseAIController.cs",
               "RelativeDocumentMoniker": "Assets\\_Scripts\\AI\\BaseAIController.cs",
               "ToolTip": "D:\\Unity\\Unity Project\\Re-Rou\\Second RPG 3D\\Assets\\_Scripts\\AI\\BaseAIController.cs",
               "RelativeToolTip": "Assets\\_Scripts\\AI\\BaseAIController.cs",
-              "ViewState": "AgIAAAsBAAAAAAAAAAAQwC4BAAAFAAAAAAAAAA==",
+              "ViewState": "AgIAAN4AAAAAAAAAAAAQwPYAAABhAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-10-22T09:26:40.529Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-10-22T09:26:40.529Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 14,
+              "DocumentIndex": 16,
               "Title": "PlayerLook.cs",
               "DocumentMoniker": "D:\\Unity\\Unity Project\\Re-Rou\\Second RPG 3D\\Assets\\_Scripts\\Character\\Player\\PlayerLook.cs",
               "RelativeDocumentMoniker": "Assets\\_Scripts\\Character\\Player\\PlayerLook.cs",
@@ -255,19 +256,19 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 9,
+              "DocumentIndex": 5,
               "Title": "PlayerCombat.cs",
               "DocumentMoniker": "D:\\Unity\\Unity Project\\Re-Rou\\Second RPG 3D\\Assets\\_Scripts\\Character\\Player\\PlayerCombat.cs",
               "RelativeDocumentMoniker": "Assets\\_Scripts\\Character\\Player\\PlayerCombat.cs",
               "ToolTip": "D:\\Unity\\Unity Project\\Re-Rou\\Second RPG 3D\\Assets\\_Scripts\\Character\\Player\\PlayerCombat.cs",
               "RelativeToolTip": "Assets\\_Scripts\\Character\\Player\\PlayerCombat.cs",
-              "ViewState": "AgIAALcAAAAAAAAAAAAkwNIAAAANAAAAAAAAAA==",
+              "ViewState": "AgIAAKYAAAAAAAAAAAAuwMIAAABMAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-11-04T09:35:21.378Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 4,
+              "DocumentIndex": 11,
               "Title": "RainManager.cs",
               "DocumentMoniker": "D:\\Unity\\Unity Project\\Re-Rou\\Second RPG 3D\\Assets\\_Scripts\\Core\\RainManager.cs",
               "RelativeDocumentMoniker": "Assets\\_Scripts\\Core\\RainManager.cs",
@@ -275,12 +276,11 @@
               "RelativeToolTip": "Assets\\_Scripts\\Core\\RainManager.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAsAAAAKAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-11-09T19:08:48.276Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-11-09T19:08:48.276Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 7,
+              "DocumentIndex": 12,
               "Title": "AttackData.cs",
               "DocumentMoniker": "D:\\Unity\\Unity Project\\Re-Rou\\Second RPG 3D\\Assets\\_Scripts\\Character\\Player\\AttackData.cs",
               "RelativeDocumentMoniker": "Assets\\_Scripts\\Character\\Player\\AttackData.cs",
@@ -292,7 +292,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 15,
+              "DocumentIndex": 17,
               "Title": "PlayerMovement.cs",
               "DocumentMoniker": "D:\\Unity\\Unity Project\\Re-Rou\\Second RPG 3D\\Assets\\_Scripts\\Character\\Player\\PlayerMovement.cs",
               "RelativeDocumentMoniker": "Assets\\_Scripts\\Character\\Player\\PlayerMovement.cs",
@@ -304,99 +304,15 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 6,
+              "DocumentIndex": 3,
               "Title": "AIProfile.cs",
               "DocumentMoniker": "D:\\Unity\\Unity Project\\Re-Rou\\Second RPG 3D\\Assets\\_Scripts\\AI\\AIProfile.cs",
               "RelativeDocumentMoniker": "Assets\\_Scripts\\AI\\AIProfile.cs",
               "ToolTip": "D:\\Unity\\Unity Project\\Re-Rou\\Second RPG 3D\\Assets\\_Scripts\\AI\\AIProfile.cs",
               "RelativeToolTip": "Assets\\_Scripts\\AI\\AIProfile.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAoAAAAWAAAAAAAAAA==",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAD0AAAAaAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-10-31T19:25:05.708Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 16,
-              "Title": "AIStates.cs",
-              "DocumentMoniker": "D:\\Unity\\Unity Project\\Re-Rou\\Second RPG 3D\\Assets\\Scripts\\AIStates.cs",
-              "RelativeDocumentMoniker": "Assets\\Scripts\\AIStates.cs",
-              "ToolTip": "D:\\Unity\\Unity Project\\Re-Rou\\Second RPG 3D\\Assets\\Scripts\\AIStates.cs",
-              "RelativeToolTip": "Assets\\Scripts\\AIStates.cs",
-              "ViewState": "AgIAAIUAAAAAAAAAAAAywAoAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-09-24T07:16:05.805Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 17,
-              "Title": "attackdone.cs",
-              "DocumentMoniker": "D:\\Unity\\Unity Project\\Re-Rou\\Second RPG 3D\\Assets\\Scripts\\attackdone.cs",
-              "RelativeDocumentMoniker": "Assets\\Scripts\\attackdone.cs",
-              "ToolTip": "D:\\Unity\\Unity Project\\Re-Rou\\Second RPG 3D\\Assets\\Scripts\\attackdone.cs",
-              "RelativeToolTip": "Assets\\Scripts\\attackdone.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAABUAAAAzAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-06-10T07:20:33.343Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 18,
-              "Title": "GameManager.cs",
-              "DocumentMoniker": "D:\\Unity\\Unity Project\\Re-Rou\\Second RPG 3D\\Assets\\Scripts\\GameManager.cs",
-              "RelativeDocumentMoniker": "Assets\\Scripts\\GameManager.cs",
-              "ToolTip": "D:\\Unity\\Unity Project\\Re-Rou\\Second RPG 3D\\Assets\\Scripts\\GameManager.cs",
-              "RelativeToolTip": "Assets\\Scripts\\GameManager.cs",
-              "ViewState": "AgIAADsAAAAAAAAAAAAwwJ0AAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-06-04T00:38:59.782Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 19,
-              "Title": "PlayerController.cs",
-              "DocumentMoniker": "D:\\Unity\\Unity Project\\Re-Rou\\Second RPG 3D\\Assets\\Scripts\\PlayerController.cs",
-              "RelativeDocumentMoniker": "Assets\\Scripts\\PlayerController.cs",
-              "ToolTip": "D:\\Unity\\Unity Project\\Re-Rou\\Second RPG 3D\\Assets\\Scripts\\PlayerController.cs",
-              "RelativeToolTip": "Assets\\Scripts\\PlayerController.cs",
-              "ViewState": "AgIAAL0AAAAAAAAAAAAUwJwAAAAHAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-05-28T16:42:48.518Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 20,
-              "Title": "SlimeAI.cs",
-              "DocumentMoniker": "D:\\Unity\\Unity Project\\Re-Rou\\Second RPG 3D\\Assets\\Scripts\\SlimeAI.cs",
-              "RelativeDocumentMoniker": "Assets\\Scripts\\SlimeAI.cs",
-              "ToolTip": "D:\\Unity\\Unity Project\\Re-Rou\\Second RPG 3D\\Assets\\Scripts\\SlimeAI.cs",
-              "RelativeToolTip": "Assets\\Scripts\\SlimeAI.cs",
-              "ViewState": "AgIAAA0AAAAAAAAAAADwvy4AAABMAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-05-29T01:15:22.558Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 21,
-              "Title": "RainManager.cs",
-              "DocumentMoniker": "D:\\Unity\\Unity Project\\Re-Rou\\Second RPG 3D\\Assets\\Scripts\\RainManager.cs",
-              "RelativeDocumentMoniker": "Assets\\Scripts\\RainManager.cs",
-              "ToolTip": "D:\\Unity\\Unity Project\\Re-Rou\\Second RPG 3D\\Assets\\Scripts\\RainManager.cs",
-              "RelativeToolTip": "Assets\\Scripts\\RainManager.cs",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAABcAAAAiAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-06-14T10:45:48.456Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 22,
-              "Title": "Grass.cs",
-              "DocumentMoniker": "D:\\Unity\\Unity Project\\Re-Rou\\Second RPG 3D\\Assets\\Scripts\\Grass.cs",
-              "RelativeDocumentMoniker": "Assets\\Scripts\\Grass.cs",
-              "ToolTip": "D:\\Unity\\Unity Project\\Re-Rou\\Second RPG 3D\\Assets\\Scripts\\Grass.cs",
-              "RelativeToolTip": "Assets\\Scripts\\Grass.cs",
-              "ViewState": "AQIAAAMAAAAAAAAAAAAAAA8AAAAmAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-05-29T00:27:51.56Z"
             }
           ]
         }

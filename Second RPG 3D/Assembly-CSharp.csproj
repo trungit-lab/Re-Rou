@@ -61,8 +61,8 @@
     <Analyzer Include="D:\Unity\Unity editor\Installs location\6000.0.48f1\Editor\Data\Tools\Unity.SourceGenerators\Unity.UIToolkit.SourceGenerator.dll" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Assets\_Scripts\Character\Player\PlayerController.cs" />
     <Compile Include="Assets\_Scripts\Core\LevelSpawnerScript.cs" />
+    <Compile Include="Assets\_Scripts\Character\Player\PlayerController.cs" />
     <Compile Include="Assets\Joystick Pack\Scripts\Joysticks\FixedJoystick.cs" />
     <Compile Include="Assets\MapaAula\Grass.cs" />
     <Compile Include="Assets\_Scripts\Core\EnemySpawner.cs" />
@@ -72,6 +72,7 @@
     <Compile Include="Assets\_Scripts\Core\WaveSpawner.cs" />
     <Compile Include="Assets\_Scripts\Character\Player\PlayerLook.cs" />
     <Compile Include="Assets\Joystick Pack\Scripts\Joysticks\FloatingJoystick.cs" />
+    <Compile Include="Assets\_Scripts\Character\Player\UpgradeData.cs" />
     <Compile Include="Assets\Joystick Pack\Scripts\Joysticks\DynamicJoystick.cs" />
     <Compile Include="Assets\_Scripts\Character\Player\AttackData.cs" />
     <Compile Include="Assets\Matthew Guz\Slash Effects FREE\Textures\Scripts\Prefab Manager.cs" />
@@ -87,6 +88,7 @@
     <Compile Include="Assets\Joystick Pack\Scripts\Joysticks\VariableJoystick.cs" />
     <Compile Include="Assets\_Scripts\AI\AIStates.cs" />
     <Compile Include="Assets\_Scripts\Character\Player\Player_Controller.cs" />
+    <Compile Include="Assets\_Scripts\Character\Player\PlayerProfile.cs" />
     <Compile Include="Assets\Matthew Guz\Slash Effects FREE\Textures\Scripts\CameraRotation.cs" />
     <Compile Include="Assets\_Scripts\Character\Player\PlayerMovement.cs" />
     <Compile Include="Assets\Joystick Pack\Examples\JoystickSetterExample.cs" />
