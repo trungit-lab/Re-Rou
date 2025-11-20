@@ -1,4 +1,4 @@
-﻿// PlayerMovement.cs (Phiên bản đã sửa, thống nhất)
+﻿// FILE: PlayerMovement.cs (Phiên bản hoàn chỉnh)
 using UnityEngine;
 
 [RequireComponent(typeof(CharacterController), typeof(Animator))]
@@ -11,11 +11,10 @@ public class PlayerMovement : MonoBehaviour
 
     [Header("Movement Stats")]
     [SerializeField] private float movementSpeed = 5f;
-    public float rotationSpeed = 10f; // Tốc độ xoay của nhân vật
+    public float rotationSpeed = 10f;
 
-    // *** SỬA ĐỔI 1: THÊM BIẾN THAM CHIẾU CAMERA ***
     [Header("Dependencies")]
-    [Tooltip("Kéo camera chính của bạn vào đây. Hệ thống di chuyển sẽ dựa vào hướng của camera này.")]
+    [Tooltip("Kéo camera chính của bạn vào đây.")]
     public Transform mainCameraTransform;
 
     [Header("Jump & Gravity")]
@@ -31,15 +30,18 @@ public class PlayerMovement : MonoBehaviour
         ccl = GetComponent<CharacterController>();
         amin = GetComponent<Animator>();
 
-        // Thêm một cảnh báo nếu bạn quên gán camera
         if (mainCameraTransform == null)
         {
-            Debug.LogError("Vui lòng gán Main Camera Transform vào script PlayerMovement trong Inspector!");
+            Debug.LogError("Vui lòng gán Main Camera Transform vào script PlayerMovement!", gameObject);
         }
     }
 
     private void Update()
     {
+        // --- SỬA ĐỔI: Kiểm tra chết ---
+        // Nếu PlayerStats tồn tại và nhân vật đã chết, thì không làm gì cả (đứng yên tại chỗ)
+        if (PlayerStats.Instance != null && PlayerStats.Instance.IsDead()) return;
+
         HandleGravity();
         HandleMovement();
     }
@@ -56,7 +58,8 @@ public class PlayerMovement : MonoBehaviour
 
     private void HandleMovement()
     {
-        // Tính hướng di chuyển dựa vào hướng camera
+        if (mainCameraTransform == null) return; // An toàn
+
         Vector3 camForward = mainCameraTransform.forward;
         Vector3 camRight = mainCameraTransform.right;
 
@@ -67,17 +70,13 @@ public class PlayerMovement : MonoBehaviour
 
         Vector3 moveDirection = (camForward * moveInput.y + camRight * moveInput.x);
 
-        // --- Di chuyển ---
         ccl.Move(moveDirection.normalized * movementSpeed * Time.deltaTime);
 
-        // --- Xoay nhân vật ---
         if (moveInput.magnitude > 0.1f)
         {
-            // Nếu đang đi lùi (input.y < 0), không quay 180 độ
             Vector3 lookDir;
             if (moveInput.y < 0)
             {
-                // Luôn giữ hướng nhìn cùng hướng với camera (đi lùi mà không quay đầu)
                 lookDir = new Vector3(camForward.x, 0, camForward.z);
             }
             else
@@ -85,20 +84,20 @@ public class PlayerMovement : MonoBehaviour
                 lookDir = new Vector3(moveDirection.x, 0, moveDirection.z);
             }
 
-            Quaternion targetRotation = Quaternion.LookRotation(lookDir);
-            transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, rotationSpeed * Time.deltaTime);
+            if (lookDir != Vector3.zero)
+            {
+                Quaternion targetRotation = Quaternion.LookRotation(lookDir);
+                transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, rotationSpeed * Time.deltaTime);
+            }
         }
 
-        // --- Cập nhật Animator ---
         amin.SetBool("isWalk", moveInput.magnitude > 0.1f);
     }
 
     private void HandleGravity()
     {
-        // isGrounded được set thành true trong OnControllerColliderHit
         if (isGrounded)
         {
-            // Reset số lần nhảy và giảm nhẹ trọng lực khi chạm đất để nhân vật "dính" đất hơn
             jumpCount = 0;
             if (velocity.y < 0)
             {
@@ -112,10 +111,12 @@ public class PlayerMovement : MonoBehaviour
 
     public void Jump()
     {
-        // Cho phép nhảy ngay cả khi đang rơi (double jump)
+        // --- SỬA ĐỔI: Không cho nhảy khi chết ---
+        if (PlayerStats.Instance != null && PlayerStats.Instance.IsDead()) return;
+
         if (jumpCount < maxJumps)
         {
-            isGrounded = false; // Ngay khi nhảy, không còn ở trên mặt đất
+            isGrounded = false;
             jumpCount++;
 
             if (jumpCount == 1)
@@ -131,16 +132,13 @@ public class PlayerMovement : MonoBehaviour
         }
     }
 
-    // Luôn luôn reset isGrounded ở đầu mỗi frame để kiểm tra lại
     private void FixedUpdate()
     {
         isGrounded = false;
     }
 
-    // Dùng OnControllerColliderHit để kiểm tra va chạm đất một cách đáng tin cậy
     void OnControllerColliderHit(ControllerColliderHit hit)
     {
-        // Kiểm tra va chạm với các object có tag "Ground" và bề mặt va chạm phải hướng lên
         if (hit.gameObject.CompareTag("Ground") && hit.normal.y > 0.5f)
         {
             isGrounded = true;

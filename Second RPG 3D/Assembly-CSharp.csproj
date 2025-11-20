@@ -86,18 +86,22 @@
     <Compile Include="Assets\_Scripts\AI\BaseAIController.cs" />
     <Compile Include="Assets\NamuFX\_CommonAssets\Scripts\Viewer.cs" />
     <Compile Include="Assets\Joystick Pack\Scripts\Joysticks\VariableJoystick.cs" />
+    <Compile Include="Assets\testbutton.cs" />
     <Compile Include="Assets\_Scripts\AI\AIStates.cs" />
+    <Compile Include="Assets\_Scripts\Character\Player\LevelUpUIController.cs" />
     <Compile Include="Assets\_Scripts\Character\Player\Player_Controller.cs" />
     <Compile Include="Assets\_Scripts\Character\Player\PlayerProfile.cs" />
     <Compile Include="Assets\Matthew Guz\Slash Effects FREE\Textures\Scripts\CameraRotation.cs" />
     <Compile Include="Assets\_Scripts\Character\Player\PlayerMovement.cs" />
     <Compile Include="Assets\Joystick Pack\Examples\JoystickSetterExample.cs" />
     <Compile Include="Assets\_Scripts\Character\Player\VFXSkillController.cs" />
+    <Compile Include="Assets\HoverTest.cs" />
     <Compile Include="Assets\_Scripts\Grass.cs" />
     <Compile Include="Assets\_Scripts\Core\RainManager.cs" />
     <Compile Include="Assets\AurynSky\Gems Ultimate Pack\Scripts\AnimationScript.cs" />
     <Compile Include="Assets\_Scripts\AI\AIProfile.cs" />
     <Compile Include="Assets\_Scripts\AI\Targetable.cs" />
+    <Compile Include="Assets\_Scripts\Character\Player\UpgradeCardUI.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\TextMesh Pro\Shaders\TMPro.cginc" />

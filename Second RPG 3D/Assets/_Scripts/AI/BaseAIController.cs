@@ -30,6 +30,7 @@ public abstract class BaseAIController : MonoBehaviour
     [Header("Core Stats")]
     public AIProfile profile;
     protected float currentHp;
+    public int xpReward;
     public bool IsPlayerVisible { get; set; } // Giữ lại để có thể dùng cho các logic đặc biệt
     #endregion
 
@@ -81,7 +82,7 @@ public abstract class BaseAIController : MonoBehaviour
             Debug.LogError(gameObject.name + ": AIProfile is not assigned in the Inspector!");
             return;
         }
-
+        xpReward = profile.xpReward;
         agent.stoppingDistance = profile.attackRange;
 
         currentHp = profile.maxHp;
@@ -353,6 +354,7 @@ public abstract class BaseAIController : MonoBehaviour
         }
 
         StopAllCoroutines();
+        PlayerStats.Instance.GainXp(xpReward);
 
         // Tắt các component thay vì hủy
         agent.enabled = false;

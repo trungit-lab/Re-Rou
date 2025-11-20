@@ -1,0 +1,19 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe93b6b707e05b8458f490acd0f0dba9, type: 3}
+  m_Name: Upgrade HP
+  m_EditorClassIdentifier: 
+  statType: 0
+  upgradeName: ' breath of life'
+  upgradeDescription: HP + 5
+  value: 5
+  icon: {fileID: 21300000, guid: b21a60114c7d0864782e25df71a8f186, type: 3}

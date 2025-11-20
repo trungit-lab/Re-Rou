@@ -1,0 +1,26 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2ee4bb8a6bd1ee047a66b4fde1763ddc, type: 3}
+  m_Name: Player Profile
+  m_EditorClassIdentifier: 
+  maxHp: 100
+  baseDamage: 10
+  moveSpeed: 5
+  requiredXpForLevel2: 100
+  requiredXpMultiplier: 1.2
+  availableUpgrades:
+  - {fileID: 11400000, guid: 69cd368cfc0823641b55c13c1b43629b, type: 2}
+  - {fileID: 11400000, guid: 07bdeac5d64c29e40b31a02d5b8fb9cb, type: 2}
+  - {fileID: 11400000, guid: 2f142c57eb36e3241a369f7121b2bcaf, type: 2}
+  - {fileID: 11400000, guid: ebe90a2ba4c36e241ad27ed849e05070, type: 2}
+  - {fileID: 11400000, guid: 0dd90af420c48ff41a80c8eb33b56e97, type: 2}
+  - {fileID: 11400000, guid: 3ae4c7f23e403a5489e24b64619fef9e, type: 2}

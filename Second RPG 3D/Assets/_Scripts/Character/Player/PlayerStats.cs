@@ -1,85 +1,198 @@
-﻿// PlayerStats.cs (Đã kết nối với GameManager)
+﻿// FILE: PlayerStats.cs (Phiên bản hoàn thiện cho Giai đoạn 2)
 using UnityEngine;
 using UnityEngine.UI;
+using System; // Cần để sử dụng Action (Event)
 
 public class PlayerStats : MonoBehaviour
 {
-    // === Components & Dependencies ===
-    private Animator amin;
-    // Đã xóa tham chiếu trực tiếp đến GameManager
+    // --- SINGLETON: Để các script khác (Combat, UI) dễ dàng truy cập ---
+    public static PlayerStats Instance { get; private set; }
 
-    [Header("Health System")]
-    public float maxHp = 100f;
-    private float currentHp;
+    [Header("Data Source")]
+    [Tooltip("BẮT BUỘC: Kéo file PlayerProfile vào đây.")]
+    public PlayerProfile profile;
+
+    [Header("UI References")]
     public Slider healthBar;
+    [Tooltip("Thanh hiển thị kinh nghiệm.")]
+    public Slider xpBar;
+    [Tooltip("Text hiển thị cấp độ hiện tại.")]
+    public TMPro.TMP_Text levelText;
 
-    [Header("Core Combat Stats")]
-    public float baseDamage = 1f;
+    // --- RUNTIME STATS (Các chỉ số thực tế trong trận đấu) ---
+    // Chúng ta dùng Property { get; private set; } để các script khác có thể ĐỌC nhưng không thể GHI đè tùy tiện.
+    public float BaseDamage { get; private set; }
+    public float MaxHp { get; private set; }
+    public float CurrentHp { get; private set; }
+    public float MoveSpeed { get; private set; }
 
-    // Trạng thái
+    // --- LEVEL SYSTEM ---
+    public int Level { get; private set; }
+    public float CurrentXp { get; private set; }
+    public float RequiredXp { get; private set; }
+
+    // --- SỰ KIỆN ---
+    // Báo cho hệ thống UI biết khi người chơi lên cấp để hiện bảng chọn thẻ bài
+    public static event Action OnPlayerLevelUp;
+
+    // --- COMPONENTS ---
+    private Animator amin;
+    private PlayerMovement playerMovement;
     private bool isDead = false;
 
     private void Awake()
     {
+        // Khởi tạo Singleton
+        if (Instance != null && Instance != this)
+        {
+            Destroy(gameObject);
+        }
+        else
+        {
+            Instance = this;
+        }
+
         amin = GetComponent<Animator>();
+        playerMovement = GetComponent<PlayerMovement>();
     }
 
     private void Start()
     {
-        // Không cần FindObjectOfType<GameManager>() nữa
-        currentHp = maxHp;
-        if (healthBar != null)
+        if (profile == null)
         {
-            healthBar.maxValue = maxHp;
-            healthBar.value = currentHp;
-        }
-    }
-
-    public void GetHit(float amount)
-    {
-        
-        if (isDead)
-        {
+            Debug.LogError("LỖI NGHIÊM TRỌNG: Chưa gán PlayerProfile cho PlayerStats!", gameObject);
             return;
         }
+
+        InitializeStatsFromProfile();
+    }
+
+    // --- KHỞI TẠO CHỈ SỐ TỪ PROFILE ---
+    private void InitializeStatsFromProfile()
+    {
+        // 1. Khởi tạo Level
+        Level = 1;
+        CurrentXp = 0;
+        RequiredXp = profile.requiredXpForLevel2;
+
+        // 2. Khởi tạo Combat Stats
+        MaxHp = profile.maxHp;
+        CurrentHp = MaxHp;
+        BaseDamage = profile.baseDamage;
+
+        // 3. Khởi tạo Movement Stats
+        MoveSpeed = profile.moveSpeed;
+        if (playerMovement != null)
+        {
+            playerMovement.SetMovementSpeed(MoveSpeed);
+        }
+
+        // 4. Cập nhật UI lần đầu
+        UpdateAllUI();
+    }
+
+    // --- HỆ THỐNG LEVEL UP ---
+    public void GainXp(int amount)
+    {
+        if (isDead) return;
+
+        CurrentXp += amount;
+
+        // Kiểm tra xem có đủ XP để lên cấp không
+        while (CurrentXp >= RequiredXp)
+        {
+            PerformLevelUp();
+        }
+
+        UpdateLevelUI();
+    }
+
+    private void PerformLevelUp()
+    {
+        CurrentXp -= RequiredXp;
+        Level++;
+
+        // Tính XP cần cho cấp tiếp theo dựa trên hệ số nhân trong Profile
+        RequiredXp *= profile.requiredXpMultiplier;
+
+        Debug.Log($"<color=yellow>LÊN CẤP! Đạt cấp {Level}</color>");
+
+        // Hồi đầy máu khi lên cấp (Phần thưởng nhỏ)
+        HealToFull();
+
+        // Phát sự kiện để UI Controller hiện bảng chọn thẻ bài
+        OnPlayerLevelUp?.Invoke();
+    }
+
+    // --- HỆ THỐNG NÂNG CẤP (Được gọi từ UI Thẻ Bài) ---
+    public void ApplyUpgrade(UpgradeData upgrade)
+    {
+        if (upgrade == null) return;
+
+        switch (upgrade.statType)
+        {
+            case StatType.Health:
+                MaxHp += upgrade.value;
+                CurrentHp += upgrade.value; // Tăng máu tối đa thì hồi luôn lượng đó
+                Debug.Log($"Nâng cấp: Máu tối đa +{upgrade.value}");
+                break;
+
+            case StatType.Damage:
+                BaseDamage += upgrade.value;
+                Debug.Log($"Nâng cấp: Sát thương +{upgrade.value}");
+                break;
+
+            case StatType.MoveSpeed:
+                MoveSpeed += upgrade.value;
+                if (playerMovement != null)
+                {
+                    playerMovement.SetMovementSpeed(MoveSpeed);
+                }
+                Debug.Log($"Nâng cấp: Tốc độ +{upgrade.value}");
+                break;
+        }
+
+        UpdateAllUI();
+    }
+
+    // --- HỆ THỐNG COMBAT (Nhận Sát Thương & Hồi Máu) ---
+    public void GetHit(float amount)
+    {
+        if (isDead) return;
+
+        CurrentHp -= amount;
+        UpdateHealthUI();
+
+        // Kích hoạt hiệu ứng rung màn hình (nếu đã làm ở Giai đoạn 1)
        
 
-        // KIỂM TRA 2: Máu trước và sau khi trừ
-        float hpBefore = currentHp;
-        currentHp -= amount;
-        float hpAfter = currentHp;
-        //Debug.Log($"[KIỂM TRA 2] Máu thay đổi: {hpBefore} -> {hpAfter}");
-
-        // KIỂM TRA 3: Thanh máu (healthBar) có được gán không?
-        if (healthBar != null)
+        if (CurrentHp > 0)
         {
-            healthBar.value = currentHp;
-        }
-        else
-        {
-            Debug.LogWarning("[KIỂM TRA 3] Lỗi! HealthBar chưa được gán trong Inspector.");
-        }
-
-        // KIỂM TRA 4: Logic chết và animation
-        if (currentHp > 0)
-        {
-           
             amin.SetTrigger("getHit");
         }
         else
         {
-            Debug.LogWarning("[KIỂM TRA 4] Máu đã hết. Gọi hàm Die().");
             Die();
         }
-
     }
 
+    public void Heal(float amount)
+    {
+        CurrentHp += amount;
+        if (CurrentHp > MaxHp) CurrentHp = MaxHp;
+        UpdateHealthUI();
+    }
 
+    public void HealToFull()
+    {
+        CurrentHp = MaxHp;
+        UpdateHealthUI();
+    }
 
     private void Die()
     {
         isDead = true;
-        currentHp = 0;
+        CurrentHp = 0;
         amin.SetTrigger("die");
 
         if (GameManager.Instance != null)
@@ -88,8 +201,34 @@ public class PlayerStats : MonoBehaviour
         }
     }
 
-    public bool IsDead()
+    public bool IsDead() => isDead;
+
+    // --- QUẢN LÝ UI ---
+    private void UpdateAllUI()
     {
-        return isDead;
+        UpdateHealthUI();
+        UpdateLevelUI();
+    }
+
+    private void UpdateHealthUI()
+    {
+        if (healthBar != null)
+        {
+            healthBar.maxValue = MaxHp;
+            healthBar.value = CurrentHp;
+        }
+    }
+
+    private void UpdateLevelUI()
+    {
+        if (xpBar != null)
+        {
+            xpBar.maxValue = RequiredXp;
+            xpBar.value = CurrentXp;
+        }
+        if (levelText != null)
+        {
+            levelText.text = "LV: " + Level;
+        }
     }
 }

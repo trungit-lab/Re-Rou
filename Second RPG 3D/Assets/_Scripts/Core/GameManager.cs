@@ -1,11 +1,10 @@
-﻿// FILE: GameManager.cs (Phiên bản nâng cấp cho Wave Spawner)
-using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections;
 using TMPro;
 using UnityEngine;
 using UnityEngine.Rendering.PostProcessing;
 using UnityEngine.SceneManagement;
 
+// Enum trạng thái game
 public enum GameState
 {
     GAMEPLAY,
@@ -16,314 +15,330 @@ public enum GameState
 
 public class GameManager : MonoBehaviour
 {
-    // --- Singleton: Giữ nguyên ---
+    #region 1. SINGLETON PATTERN
     public static GameManager Instance { get; private set; }
-    // hitStop
-    private Coroutine hitStopCoroutine;
-    // Trong GameManager.cs, thêm vào khu vực UI Panels & Texts
-    [Header("Wave UI")]
-    public TMP_Text waveCountdownText; // Kéo Text đếm ngược vào đây
-    public TMP_Text currentWaveText;   // (Tùy chọn) Text hiển thị "Sóng 1/3"
 
-    // --- Trạng thái game: Giữ nguyên ---
-    public GameState gameState;
-
-    [Header("Core References")]
-    public Transform player;
-    // --- THÊM MỚI: Kết nối đến Wave Spawner ---
-    [Tooltip("Kéo đối tượng WaveSpawner trong scene vào đây.")]
-    public WaveSpawner waveSpawner;
-
-    [Header("UI Panels & Texts")]
-    public GameObject pauseGame;
-    public GameObject panelDie;
-    public TMP_Text scoreDie;
-    public TMP_Text tx;
-    public GameObject panelWin;
-    public GameObject panelHuongDan;
-    [Header("Monsters UI")]
-    public TMP_Text soLuong; // Sẽ hiển thị số quái còn lại trong sóng
-
-    // --- THAY ĐỔI: Danh sách này không còn cần thiết nữa ---
-    // GameManager không cần tự quản lý danh sách này, nó chỉ cần biết "số lượng".
-    // private List<BaseAIController> activeEnemies = new List<BaseAIController>();
-    private int enemiesRemaining; // Biến mới để theo dõi số lượng
-
-    // --- Các biến khác giữ nguyên ---
-    [Header("Gem")]
-    public TMP_Text diem;
-    private int score_d;
-    [Header("Rain Manager")]
-    public PostProcessVolume postB;
-
-
-
-    // --- Hàm Awake: Giữ nguyên ---
     private void Awake()
     {
-        if (Instance != null && Instance != this) { Destroy(gameObject); }
-        else { Instance = this; }
+        if (Instance != null && Instance != this)
+        {
+            Destroy(gameObject);
+            return;
+        }
+        Instance = this;
+
+        // Tự động tìm Player nếu chưa gán
         if (player == null)
         {
-            GameObject playerObject = GameObject.FindGameObjectWithTag("Player");
-            if (playerObject != null) player = playerObject.transform;
+            GameObject playerObj = GameObject.FindGameObjectWithTag("Player");
+            if (playerObj != null) player = playerObj.transform;
         }
     }
+    #endregion
 
-    // --- HÀM START: ĐƯỢC ĐƠN GIẢN HÓA RẤT NHIỀU ---
-    void Start()
+    #region 2. INSPECTOR VARIABLES
+
+    [Header("--- GAME STATE & CORE ---")]
+    public GameState gameState;
+    public Transform player;
+    [Tooltip("Kéo WaveSpawner vào đây")]
+    public WaveSpawner waveSpawner;
+
+    [Header("--- WAVE UI ---")]
+    public TMP_Text waveCountdownText;
+    public TMP_Text currentWaveText;
+
+    [Header("--- UI PANELS ---")]
+    public GameObject pauseGame;
+    public GameObject panelDie;
+    public GameObject panelWin;
+    //public GameObject panelHuongDan;
+
+    [Header("--- UI TEXTS & SCORE ---")]
+    public TMP_Text scoreDie;
+    public TMP_Text tx;      // Text hiển thị điểm số hiện tại
+    public TMP_Text soLuong; // Hiển thị số lượng quái còn lại
+    public TMP_Text diem;    // Gem score (nếu có)
+
+    [Header("--- VISUALS (RAIN & POST PROCESS) ---")]
+    public PostProcessVolume postB;
+
+    #endregion
+
+    #region 3. PRIVATE VARIABLES
+    private int enemiesRemaining = 0;
+    private Coroutine hitStopCoroutine;
+    private Coroutine rainEffectCoroutine;
+    private Coroutine postProcessCoroutine;
+    #endregion
+
+    #region 4. UNITY LIFECYCLE
+
+    private void Start()
     {
-        // if (rainParticle != null) rainModule = rainParticle.emission; // Sẽ gây lỗi nếu bạn không có các biến rain cũ, tôi tạm comment lại
-
-        // --- THAY ĐỔI: Xóa bỏ hoàn toàn logic đếm quái cũ ---
-        // Không cần tự đi tìm quái nữa, WaveSpawner sẽ thông báo cho chúng ta.
+        // Reset trạng thái ban đầu
         enemiesRemaining = 0;
-        if (soLuong != null) soLuong.text = enemiesRemaining.ToString();
+        UpdateEnemyCountUI();
 
-        // Ẩn tất cả các panel không cần thiết (giữ nguyên)
-        if (panelDie != null) panelDie.SetActive(false);
-        if (panelWin != null) panelWin.SetActive(false);
-        if (pauseGame != null) pauseGame.SetActive(false);
-        if (panelHuongDan != null) panelHuongDan.SetActive(false);
+        // Đảm bảo tắt hết các UI không cần thiết
+        panelDie?.SetActive(false);
+        panelWin?.SetActive(false);
+        pauseGame?.SetActive(false);
+        //panelHuongDan?.SetActive(false);
+        waveCountdownText?.gameObject.SetActive(false);
 
-        // Bắt đầu game (giữ nguyên)
+        // Bắt đầu game
         ChangeGameState(GameState.GAMEPLAY);
     }
 
+    private void Update()
+    {
+        // CHỨC NĂNG QUAN TRỌNG: Bấm ESC để Pause/Resume
+        // Vì khi ẩn chuột, người chơi không thể bấm nút Pause trên màn hình được.
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            if (gameState == GameState.GAMEPLAY)
+            {
+                ButtomPause(); // Gọi hàm Pause
+            }
+            else if (gameState == GameState.PAUSE)
+            {
+                ButtomResume(); // Gọi hàm Resume
+            }
+            //// Nếu đang ở panel Hướng dẫn thì tắt nó đi
+            //else if (panelHuongDan != null && panelHuongDan.activeSelf)
+            //{
+            //    panelHuongDan.SetActive(false);
+            //}
+        }
+    }
+
+    #endregion
+
+    #region 5. STATE MANAGEMENT (QUẢN LÝ TRẠNG THÁI)
+
+    public void ChangeGameState(GameState newState)
+    {
+        gameState = newState;
+        Debug.Log($"GameManager: Changed State to {newState}");
+
+        switch (gameState)
+        {
+            case GameState.GAMEPLAY:
+                Time.timeScale = 1f;
+                SetCursorState(false); // Ẩn chuột để chơi game
+                break;
+
+            case GameState.PAUSE:
+                Time.timeScale = 0f;
+                pauseGame?.SetActive(true);
+                SetCursorState(true); // Hiện chuột để bấm menu
+                break;
+
+            case GameState.WIN:
+                Time.timeScale = 0f; // Hoặc để 1f nếu muốn slow motion
+                panelWin?.SetActive(true);
+                SetCursorState(true);
+                break;
+
+            case GameState.DIE:
+                Time.timeScale = 0f;
+                HandleDeathUI();
+                SetCursorState(true);
+                break;
+        }
+    }
+
+    private void SetCursorState(bool isVisible)
+    {
+        Cursor.visible = isVisible;
+        Cursor.lockState = isVisible ? CursorLockMode.None : CursorLockMode.Locked;
+    }
+
+    private void HandleDeathUI()
+    {
+        if (panelDie != null)
+        {
+            panelDie.SetActive(true);
+            // Copy điểm số từ màn hình chơi sang màn hình chết
+            if (scoreDie != null && tx != null)
+            {
+                scoreDie.text = "Score: " + tx.text;
+            }
+        }
+    }
+
+    #endregion
+
+    #region 6. WAVE SYSTEM LOGIC
+
+    // Được gọi từ WaveSpawner
+    public void OnWaveStarted(int enemyCount)
+    {
+        enemiesRemaining = enemyCount;
+        UpdateEnemyCountUI();
+        // Có thể thêm hiệu ứng âm thanh bắt đầu wave ở đây
+    }
+
+    // Được gọi khi quái chết (từ code AI hoặc Health)
+    public void OnEnemyDefeated(BaseAIController defeatedEnemy = null)
+    {
+        enemiesRemaining--;
+        if (enemiesRemaining < 0) enemiesRemaining = 0;
+
+        UpdateEnemyCountUI();
+
+        // Báo ngược lại cho Spawner biết (để tính toán Win/Next Wave)
+        waveSpawner?.OnAnEnemyWasKilled();
+    }
+
+    private void UpdateEnemyCountUI()
+    {
+        if (soLuong != null)
+        {
+            soLuong.text = enemiesRemaining.ToString();
+        }
+    }
 
     public void UpdateWaveUI(string message, float countdown = -1f)
     {
-        if (currentWaveText != null)
-        {
-            currentWaveText.text = message;
-        }
+        if (currentWaveText != null) currentWaveText.text = message;
 
         if (waveCountdownText != null)
         {
             if (countdown >= 0)
             {
                 waveCountdownText.gameObject.SetActive(true);
+                // Chuyển đổi float sang phút:giây cho đẹp
                 int minutes = Mathf.FloorToInt(countdown / 60);
                 int seconds = Mathf.FloorToInt(countdown % 60);
-                waveCountdownText.text = $"Sóng tiếp theo: {minutes:00}:{seconds:00}";
+                waveCountdownText.text = $"Wave Start In: {minutes:00}:{seconds:00}";
             }
             else
             {
-                // Ẩn đi nếu không có đếm ngược
-                Debug.Log("Ẩn đếm ngược sóng tiếp theo.");
                 waveCountdownText.gameObject.SetActive(false);
             }
         }
     }
 
+    #endregion
 
-    // === THÊM MỚI: Hàm quản lý con trỏ chuột ===
-    private void SetCursorState(bool locked)
-    {
-        if (locked)
-        {
-            // Ẩn và khóa chuột vào giữa màn hình
-            Cursor.lockState = CursorLockMode.Locked;
-            Cursor.visible = false;
-        }
-        else
-        {
-            // Hiện và mở khóa chuột
-            Cursor.lockState = CursorLockMode.None;
-            Cursor.visible = true;
-        }
-    }
+    #region 7. UI BUTTON EVENTS (GIỮ NGUYÊN TÊN ĐỂ KHÔNG LỖI EDITOR)
 
-    // --- HÀM QUẢN LÝ TRẠNG THÁI TRUNG TÂM ---
-    public void ChangeGameState(GameState newState)
-    {
-        if (gameState == newState && newState != GameState.GAMEPLAY) return;
-
-        gameState = newState;
-        Debug.Log("GameManager: State changed to " + newState.ToString());
-
-        switch (gameState)
-        {
-            case GameState.GAMEPLAY:
-                Time.timeScale = 1f;
-                SetCursorState(true); // THÊM VÀO: Ẩn chuột khi chơi
-                break;
-
-            case GameState.WIN:
-                Time.timeScale = 0f;
-                if (panelWin != null) panelWin.SetActive(true);
-                SetCursorState(false); // THÊM VÀO: Hiện chuột khi thắng
-                break;
-
-            case GameState.DIE:
-                Time.timeScale = 0f;
-                if (panelDie != null)
-                {
-                    panelDie.SetActive(true);
-                    if (scoreDie != null && tx != null) scoreDie.text = "Score: " + tx.text;
-                }
-                SetCursorState(false); // THÊM VÀO: Hiện chuột khi thua
-                break;
-
-            case GameState.PAUSE:
-                Time.timeScale = 0f;
-                if (pauseGame != null) pauseGame.SetActive(true);
-                SetCursorState(false); // THÊM VÀO: Hiện chuột khi tạm dừng
-                break;
-        }
-    }
-
-
-    // --- HÀM THÊM MỚI: Được WaveSpawner gọi khi một sóng mới bắt đầu ---
-    public void OnWaveStarted(int enemyCountInWave)
-    {
-        enemiesRemaining = enemyCountInWave;
-        Debug.Log("GameManager: Một sóng mới bắt đầu với " + enemyCountInWave + " kẻ địch.");
-        if (soLuong != null)
-        {
-            soLuong.text = enemyCountInWave.ToString();
-        }
-
-    }
-
-    // --- HÀM OnEnemyDefeated: ĐƯỢC CẬP NHẬT LOGIC ---
-    public void OnEnemyDefeated(BaseAIController defeatedEnemy)
-    {
-        enemiesRemaining--;
-        
-        if (soLuong != null)
-        {
-            soLuong.text = enemiesRemaining.ToString();
-        }
-        Debug.Log("GameManager: Một kẻ địch bị tiêu diệt. Còn lại: " + enemiesRemaining);
-
-        // THAY ĐỔI: Không cần tự kiểm tra điều kiện thắng ở đây nữa.
-        // Thay vào đó, báo cho WaveSpawner biết để nó quyết định.
-        if (waveSpawner != null)
-        {
-            waveSpawner.OnAnEnemyWasKilled();
-
-        }
-    }
-
-
-    // --- CÁC HÀM TIỆN ÍCH KHÁC ---
-
-    public void DieDone()
-    {
-        // Hàm này bây giờ sẽ là một "lối tắt" để gọi đến hệ thống quản lý trạng thái chính
-        ChangeGameState(GameState.DIE);
-    }
-    public void Plus()
-    {
-        int tam = int.Parse(tx.text);
-        ++tam;
-        tx.text = tam.ToString();
-    }
-
-    //public void CreateGem(Transform pos)
-    //{
-    //    Vector3 hi = pos.position;
-    //    hi.y += 0.5f;
-    //    Instantiate(gemObject, hi, Quaternion.Euler(90f, 0f, 0f));
-    //}
-
-    // --- CÁC HÀM ĐIỀU KHIỂN NÚT BẤM (ĐÃ CẢI TIẾN) ---
-
+    // Nút Pause (hoặc gọi từ phím ESC)
     public void ButtomPause()
     {
+        if (gameState == GameState.DIE || gameState == GameState.WIN) return;
         ChangeGameState(GameState.PAUSE);
     }
 
+    // Nút Resume
     public void ButtomResume()
     {
-        ChangeGameState(GameState.GAMEPLAY);
         if (pauseGame != null) pauseGame.SetActive(false);
+        ChangeGameState(GameState.GAMEPLAY);
     }
 
+    // Nút Replay
     public void ButtomRePlay()
     {
         Time.timeScale = 1f;
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
 
+    // Nút Home
     public void ButtomHome()
     {
         Time.timeScale = 1f;
-        SceneManager.LoadScene("UI"); // Giả sử scene menu của bạn tên là "UI"
+        SceneManager.LoadScene("UI"); // Đảm bảo scene tên là "UI"
     }
 
-    public void ButtomHowToPlay()
-    {
-        if (panelHuongDan != null) panelHuongDan.SetActive(true);
-    }
+    // Nút Hướng dẫn
+    //public void ButtomHowToPlay()
+    //{
+    //    panelHuongDan?.SetActive(true);
+    //}
 
+    // Nút Thoát
     public void ButtomExit()
     {
 #if UNITY_EDITOR
         UnityEditor.EditorApplication.isPlaying = false;
 #else
-        Application.Quit();
+            Application.Quit();
 #endif
     }
 
-    public void OnOffRain(bool isRain)
+    // Logic cộng điểm
+    public void Plus()
     {
-        // Dừng các coroutine cũ trước khi bắt đầu cái mới để tránh chạy song song
-        StopCoroutine("RainManager");
-        StopCoroutine("PostBManager");
-        StartCoroutine("RainManager", isRain);
-        StartCoroutine("PostBManager", isRain);
+        if (tx != null && int.TryParse(tx.text, out int currentScore))
+        {
+            currentScore++;
+            tx.text = currentScore.ToString();
+        }
     }
 
+    // Hàm gọi khi Player chết (để các script khác gọi ngắn gọn)
+    public void DieDone()
+    {
+        ChangeGameState(GameState.DIE);
+    }
 
+    #endregion
+
+    #region 8. VISUAL EFFECTS (HIT STOP & RAIN)
+
+    // Hiệu ứng khựng hình khi đánh trúng
     public void TriggerHitStop(float duration)
     {
-        // Chỉ chạy Hit Stop khi game đang ở trạng thái GAMEPLAY
         if (gameState != GameState.GAMEPLAY) return;
 
-        // Dừng lại coroutine cũ nếu nó đang chạy để tránh xung đột
-        if (hitStopCoroutine != null)
-        {
-            Time.timeScale = 1f; // Đảm bảo trả lại timeScale trước khi dừng
-            StopCoroutine(hitStopCoroutine);
-        }
-
-        hitStopCoroutine = StartCoroutine(HitStopCoroutine(duration));
+        if (hitStopCoroutine != null) StopCoroutine(hitStopCoroutine);
+        hitStopCoroutine = StartCoroutine(HitStopRoutine(duration));
     }
 
-    private IEnumerator HitStopCoroutine(float duration)
+    private IEnumerator HitStopRoutine(float duration)
     {
-        Time.timeScale = 0.01f; // Đóng băng game (gần bằng 0)
-        yield return new WaitForSecondsRealtime(duration); // Chờ một khoảng thời gian thực, không bị ảnh hưởng bởi Time.timeScale
-        Time.timeScale = 1f; // Trả lại tốc độ bình thường
+        float originalScale = Time.timeScale;
+        Time.timeScale = 0.05f; // Slow motion cực chậm
+        yield return new WaitForSecondsRealtime(duration);
+
+        // Chỉ trả lại TimeScale nếu game vẫn đang chơi (không bị pause giữa chừng)
+        if (gameState == GameState.GAMEPLAY)
+        {
+            Time.timeScale = 1f;
+        }
         hitStopCoroutine = null;
     }
-    IEnumerator PostBManager(bool isRain)
+
+    // Quản lý hiệu ứng mưa và Post Processing
+    public void OnOffRain(bool isRain)
     {
-        // Đảm bảo PostProcessVolume đã được gán
+        if (postProcessCoroutine != null) StopCoroutine(postProcessCoroutine);
+        postProcessCoroutine = StartCoroutine(PostProcessFade(isRain));
+
+        // Nếu có logic Particle Mưa, thêm vào đây
+        // if (isRain) rainSystem.Play(); else rainSystem.Stop();
+    }
+
+    private IEnumerator PostProcessFade(bool enableEffect)
+    {
         if (postB == null) yield break;
 
-        switch (isRain)
+        float targetWeight = enableEffect ? 1f : 0f;
+        float startWeight = postB.weight;
+        float duration = 1.0f; // Thời gian chuyển đổi
+        float elapsed = 0f;
+
+        while (elapsed < duration)
         {
-            case true:
-                // Tăng dần hiệu ứng xử lý hậu kỳ
-                for (float i = postB.weight; i < 1; i += Time.deltaTime)
-                {
-                    postB.weight = i;
-                    yield return new WaitForEndOfFrame();
-                }
-                postB.weight = 1;
-                break;
-            case false:
-                // Giảm dần hiệu ứng xử lý hậu kỳ
-                for (float i = postB.weight; i > 0; i -= Time.deltaTime)
-                {
-                    postB.weight = i;
-                    yield return new WaitForEndOfFrame();
-                }
-                postB.weight = 0;
-                break;
+            elapsed += Time.deltaTime; // Dùng deltaTime bình thường vì hiệu ứng này chạy ở Gameplay
+            postB.weight = Mathf.Lerp(startWeight, targetWeight, elapsed / duration);
+            yield return null; // Chờ frame tiếp theo
         }
+        postB.weight = targetWeight;
     }
+
+    #endregion
 }

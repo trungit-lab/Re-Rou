@@ -12,24 +12,26 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4ba1f07b4a492944eb637191e8d70a8b, type: 3}
   m_Name: Level 1 Spawner
   m_EditorClassIdentifier: 
+  gameMode: 0
+  finalWaveSurvivalTime: 180
   waves:
   - waveName: 1
     spawnGroups:
     - description: Slime
       enemyPrefab: {fileID: 6085995283562918034, guid: 0cf196a7723b48345995a24fddfb3a09, type: 3}
-      count: 2
+      count: 5
       profileOverride: {fileID: 11400000, guid: 1f45c604d446d3c4ba75802486bd8f0f, type: 2}
       spawnDelay: 1
       delayBetweenSpawns: 0.5
       objectiveIndex: 0
     - description: TurtleShhellPBR
       enemyPrefab: {fileID: 8641962616908287144, guid: 09d56a60e1ae1d447baf3a0558351d88, type: 3}
-      count: 2
+      count: 5
       profileOverride: {fileID: 11400000, guid: 3c39a64ac577629468e4cc8f15535bae, type: 2}
       spawnDelay: 1
       delayBetweenSpawns: 0.5
       objectiveIndex: 0
-    timeUntilNextWave: 60
+    timeUntilNextWave: 30
   - waveName: 2
     spawnGroups:
     - description: Slime
@@ -46,6 +48,20 @@ MonoBehaviour:
       spawnDelay: 10
       delayBetweenSpawns: 0.5
       objectiveIndex: 0
+    - description: TurtleShhellPBR
+      enemyPrefab: {fileID: 8641962616908287144, guid: 09d56a60e1ae1d447baf3a0558351d88, type: 3}
+      count: 10
+      profileOverride: {fileID: 11400000, guid: 1f45c604d446d3c4ba75802486bd8f0f, type: 2}
+      spawnDelay: 10
+      delayBetweenSpawns: 0.5
+      objectiveIndex: 0
+    - description: Dog Bost
+      enemyPrefab: {fileID: 2417096570345459129, guid: 4545171e41781f147b4c6b0a77c60334, type: 3}
+      count: 1
+      profileOverride: {fileID: 11400000, guid: 609dcdd0f6436414fae8a7cf8f524f70, type: 2}
+      spawnDelay: 1
+      delayBetweenSpawns: 0.5
+      objectiveIndex: 0
     timeUntilNextWave: 30
   - waveName: 3
     spawnGroups:
@@ -53,13 +69,20 @@ MonoBehaviour:
       enemyPrefab: {fileID: 6085995283562918034, guid: 0cf196a7723b48345995a24fddfb3a09, type: 3}
       count: 90
       profileOverride: {fileID: 11400000, guid: 1f45c604d446d3c4ba75802486bd8f0f, type: 2}
-      spawnDelay: 90
+      spawnDelay: 30
       delayBetweenSpawns: 0.5
       objectiveIndex: 0
     - description: TurtleShhellPBR
       enemyPrefab: {fileID: 8641962616908287144, guid: 09d56a60e1ae1d447baf3a0558351d88, type: 3}
-      count: 90
+      count: 30
       profileOverride: {fileID: 11400000, guid: 1f45c604d446d3c4ba75802486bd8f0f, type: 2}
+      spawnDelay: 90
+      delayBetweenSpawns: 0.5
+      objectiveIndex: 0
+    - description: Dog Bost
+      enemyPrefab: {fileID: 2417096570345459129, guid: 4545171e41781f147b4c6b0a77c60334, type: 3}
+      count: 30
+      profileOverride: {fileID: 11400000, guid: 609dcdd0f6436414fae8a7cf8f524f70, type: 2}
       spawnDelay: 90
       delayBetweenSpawns: 0.5
       objectiveIndex: 0

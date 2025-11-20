@@ -82,7 +82,7 @@ public class SlimeAI : BaseAIController
 
         // Bạn có thể thêm các hiệu ứng đặc trưng cho Slime khi chết ở đây
         // Ví dụ: Debug.Log("Slime explodes with a splat!"); 
-
+        //PlayerStats.Instance.GainXp(10);
         // Chuyển sang trạng thái chết (dù trạng thái này không làm gì, nó giúp hệ thống logic được rõ ràng)
         ChangeState(DieState);
     }
